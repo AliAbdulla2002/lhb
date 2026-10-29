@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { ArrowLeft, ArrowRight, CarFront, Flame, MapPin } from "lucide-react";
+import { ArrowLeft, ArrowRight, CarFront, Clock, Flame, MapPin } from "lucide-react";
 import { restaurantJsonLd, seo } from "~/lib/seo";
 import type { Route } from "./+types/home";
 import { useLang } from "~/i18n";
@@ -40,17 +40,21 @@ function Hero() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_60%,var(--color-char-950))]" />
       </div>
 
-      <Container className="grid min-h-[78svh] grid-cols-1 items-center gap-8 py-12 sm:py-16 lg:gap-10 lg:grid-cols-[1.2fr_1fr]">
-        <div className="space-y-7 motion-safe:animate-fade-up">
+      {/* Phones and tablets: one centred column, emblem on top, sized to its content.
+          Wide screens: text beside the emblem, filling most of the first screen. */}
+      <Container className="grid grid-cols-1 content-center items-center gap-6 pb-12 pt-8 text-center sm:gap-8 sm:py-14 lg:min-h-[78svh] lg:grid-cols-[1.2fr_1fr] lg:gap-10 lg:text-start">
+        <div className="space-y-5 motion-safe:animate-fade-up sm:space-y-7">
           <p className="inline-flex items-center gap-2 rounded-full border border-cream-50/15 bg-cream-50/5 px-4 py-1.5 text-sm text-flame-300">
             <MapPin className="size-4" aria-hidden />
             {t("home.why.localTitle")}
           </p>
-          <h1 className="text-5xl font-black leading-[1.05] sm:text-7xl">
+          <h1 className="text-[clamp(2.75rem,13vw,4.5rem)] font-black leading-[1.05] sm:text-7xl">
             {title ? pick(title, "value") : t("home.why.flameTitle")}
           </h1>
-          <p className="max-w-xl text-lg text-cream-100/80">{subtitle ? pick(subtitle, "value") : t("home.why.pickupBody")}</p>
-          <div className="flex flex-wrap gap-3">
+          <p className="mx-auto max-w-md text-base text-cream-100/80 sm:max-w-xl sm:text-lg lg:mx-0">
+            {subtitle ? pick(subtitle, "value") : t("home.why.pickupBody")}
+          </p>
+          <div className="mx-auto grid max-w-sm grid-cols-2 gap-3 [&>a]:whitespace-nowrap max-[359px]:gap-2 max-[359px]:[&>a]:px-3 max-[359px]:[&>a]:text-sm sm:flex sm:max-w-none sm:justify-center lg:justify-start">
             <ButtonLink to="/menu" size="lg">
               {t("home.heroCta")}
               <Arrow className="size-5" aria-hidden />
@@ -59,12 +63,25 @@ function Hero() {
               {t("home.heroSecondary")}
             </ButtonLink>
           </div>
+          <ul className="flex flex-wrap justify-center gap-x-5 gap-y-2 pt-1 text-sm text-cream-100/70 lg:justify-start">
+            {[
+              { icon: Flame, label: t("home.steps.order") },
+              { icon: Clock, label: t("home.steps.time") },
+              { icon: CarFront, label: t("home.steps.car") },
+            ].map(({ icon: Icon, label }) => (
+              <li key={label} className="inline-flex items-center gap-1.5">
+                <Icon className="size-4 text-flame-400" aria-hidden />
+                {label}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* On phones the emblem sits above the headline; on wide screens beside it. */}
         <div className="relative -order-1 lg:order-none">
+          {/* Warm halo so the badge doesn't float on flat dark on small screens. */}
+          <div aria-hidden className="absolute inset-[-20%] -z-10 rounded-full bg-[radial-gradient(closest-side,rgb(229_65_53/0.35),transparent)] lg:hidden" />
           <HeroEmblem />
-          <span aria-hidden className="pointer-events-none absolute bottom-0 end-0 font-display text-6xl font-black text-cream-50/10 lg:bottom-6 lg:text-8xl">لهب</span>
+          <span aria-hidden className="pointer-events-none absolute bottom-6 end-0 hidden font-display text-8xl font-black text-cream-50/10 lg:block">لهب</span>
         </div>
       </Container>
     </section>

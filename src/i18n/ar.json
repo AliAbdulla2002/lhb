@@ -43,6 +43,7 @@
     "heroCta": "اطلب الحين",
     "heroSecondary": "تصفح المنيو",
     "emblem": "شعلة لهب، اضغط عليها",
+    "steps": { "order": "اطلب أونلاين", "time": "اختار وقتك", "car": "استلم من سيارتك" },
     "featuredTitle": "المفضلة عند الكل",
     "featuredSubtitle": "مختارات من مطبخ لهب.",
     "offersTitle": "العروض الحالية",

@@ -37,7 +37,7 @@ export function HeroEmblem() {
       onPointerLeave={reset}
       onPointerCancel={reset}
       onClick={() => setBurst((n) => n + 1)}
-      className="group relative mx-auto block aspect-square w-full max-w-[15rem] cursor-pointer touch-pan-y select-none rounded-full [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-flame-400 sm:max-w-xs lg:max-w-md"
+      className="group relative mx-auto block aspect-square w-[min(100%,40svh)] max-w-[11rem] cursor-pointer touch-pan-y select-none rounded-full [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-flame-400 sm:max-w-[14rem] md:max-w-[16rem] lg:w-[min(100%,55svh)] lg:max-w-md"
     >
       <div
         ref={tilt}

@@ -43,6 +43,7 @@
     "heroCta": "Order now",
     "heroSecondary": "Explore the menu",
     "emblem": "The Lahab flame, tap it",
+    "steps": { "order": "Order online", "time": "Pick your time", "car": "Collect from your car" },
     "featuredTitle": "Fan favourites",
     "featuredSubtitle": "Hand-picked from the Lahab kitchen.",
     "offersTitle": "Current offers",
