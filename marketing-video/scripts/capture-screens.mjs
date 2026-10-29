@@ -106,6 +106,17 @@ await settle(p);
 await p.screenshot({ path: new URL("home.png", OUT).pathname.slice(1) });
 await p.goto(`${SITE}/menu`);
 await settle(p);
+// Menu photos load lazily: load them all before the full-page shot.
+await p.evaluate(async () => {
+  for (const img of document.querySelectorAll("img")) img.loading = "eager";
+  for (let y = 0; y < document.body.scrollHeight; y += 600) {
+    window.scrollTo(0, y);
+    await new Promise((r) => setTimeout(r, 120));
+  }
+  await Promise.all([...document.images].map((i) => (i.complete ? null : new Promise((r) => { i.onload = i.onerror = r; }))));
+  window.scrollTo(0, 0);
+});
+await p.waitForTimeout(800);
 // A tall image for the scroll shot: the sticky header and bars would repeat mid-page.
 await p.addStyleTag({ content: "header,.sticky{position:static!important}" });
 await p.screenshot({ path: new URL("menu-full.png", OUT).pathname.slice(1), fullPage: true });

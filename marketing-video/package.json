@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "studio": "remotion studio src/index.ts",
-    "screens": "node scripts/capture-screens.mjs",
-    "render": "remotion render src/index.ts LahabReel out/lahab-reel.mp4",
+    "screens": "node scripts/capture-screens.mjs && python scripts/to-jpg.py",
+    "music": "python scripts/music.py",
+    "voice": "python scripts/vo-normalize.py",
+    "render": "remotion render src/index.ts LahabReel out/lahab-reel.mp4 --codec=h264 --crf=18 --audio-codec=aac && python scripts/master.py",
     "still": "remotion still src/index.ts LahabReel"
   },
   "dependencies": {
