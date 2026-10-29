@@ -20,3 +20,25 @@ export function formatDateTime(iso: string, lang: Lang): string {
     timeZone: BAHRAIN_TZ,
   }).format(new Date(iso));
 }
+
+/** ISO timestamp → value for <input type="datetime-local"> in Bahrain time. */
+export function toBahrainInput(iso: string | null | undefined): string {
+  if (!iso) return "";
+  const parts = new Intl.DateTimeFormat("sv-SE", {
+    timeZone: BAHRAIN_TZ,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  }).format(new Date(iso));
+  return parts.replace(" ", "T");
+}
+
+/** <input type="datetime-local"> value interpreted as Bahrain time (UTC+3) → ISO. */
+export function fromBahrainInput(value: string): string | null {
+  if (!value) return null;
+  const d = new Date(`${value.length === 16 ? `${value}:00` : value}+03:00`);
+  return Number.isNaN(d.getTime()) ? null : d.toISOString();
+}

@@ -367,11 +367,15 @@ All of the DB and most E2E tests depend on decision **D3** (local Supabase via D
 - [ ] Edge Function wrappers for `app.*` functions (Phase 5/6, with the flows that call them)
 - [ ] Order history, favourites UI, reorder (Phase 5)
 
-**Phase 4 — Admin**
-- [ ] Admin shell (sidebar, responsive), role guards
-- [ ] Products/options/images, categories (reorder, archive), promotions, coupons
-- [ ] Orders board with filters, status transitions, cancellation, audit
-- [ ] Branches, hours, exceptions, pickup pause/capacity, settings, content, staff & roles, customers, reports, audit log viewer
+**Phase 4 — Admin** (2026-10-29)
+- [x] Admin shell (sidebar, responsive), role-aware navigation and page gates
+- [x] Products (bilingual, price, flags, daily window, staff notes, archive/delete), option groups and values, photo upload with WebP resize, primary photo
+- [x] Categories (create, edit, reorder, visibility, archive), promotions (schedule, banner image, reorder), coupons
+- [x] Orders board: filters, live updates, detail view, status transitions, cancellation with reason, arrival acknowledgement
+- [x] Branches: pickup pause, lead time, slot capacity, instructions, weekly hours, special days; identity (super admin)
+- [x] Settings & content, staff & roles (grant by email, branch assignment), customers (masked contact details), sales reports, audit log viewer
+- [x] Admin DB API tests (13) + admin UI smoke tests (18)
+- Architecture change: staff actions call actor-bound database functions (`public.transition_order_status`, `admin_*`) instead of Edge Function wrappers. Same server-side checks, testable without Docker. Edge Functions remain for secret-bearing work (payment webhooks).
 
 **Phase 5 — Ordering**
 - [ ] Cart (persisted), server quote, unavailable-item handling

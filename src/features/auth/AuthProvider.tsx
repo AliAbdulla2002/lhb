@@ -12,6 +12,9 @@ interface AuthState {
   user: User | null;
   /** For showing/hiding UI only. Every privileged action is re-checked server-side. */
   roles: AppRole[];
+  /** True while the signed-in user's roles are being fetched. */
+  rolesLoading: boolean;
+  hasRole: (min: AppRole) => boolean;
   signOut: () => Promise<void>;
 }
 
@@ -20,8 +23,12 @@ const AuthContext = createContext<AuthState>({
   session: null,
   user: null,
   roles: [],
+  rolesLoading: false,
+  hasRole: () => false,
   signOut: async () => {},
 });
+
+const RANK: Record<AppRole, number> = { customer: 1, staff: 2, manager: 3, super_admin: 4 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null);
@@ -67,9 +74,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const roles = rolesFor && rolesFor.userId === userId ? rolesFor.roles : [];
+  const rolesLoading = !!userId && rolesFor?.userId !== userId;
+  const hasRole = (min: AppRole) => roles.some((r) => RANK[r] >= RANK[min]);
 
   return (
-    <AuthContext.Provider value={{ loading, session, user: session?.user ?? null, roles, signOut }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ loading, session, user: session?.user ?? null, roles, rolesLoading, hasRole, signOut }}>
+      {children}
+    </AuthContext.Provider>
   );
 }
 
