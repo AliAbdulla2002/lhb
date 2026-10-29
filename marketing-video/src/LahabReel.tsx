@@ -60,10 +60,10 @@ const Hook = () => {
 
 // Timed to the second voice-over line, one dish per name.
 const DISHES = [
-  { slug: "chicken-shawarma-plate", ar: "صحن شاورما دجاج", price: "3.000", at: 6 },
-  { slug: "arabic-chicken-shawarma-box", ar: "بكس شاورما عربي", price: "2.800", at: 44 },
-  { slug: "chicken-shawarma-burger", ar: "برجر شاورما دجاج", price: "1.700", at: 82 },
-  { slug: "cheesy-fries", ar: "بطاطس تشيزي", price: "1.800", at: 112 },
+  { slug: "chicken-shawarma-plate", ar: "صحن شاورما دجاج", price: "3.000", at: 7 },
+  { slug: "arabic-chicken-shawarma-box", ar: "بكس شاورما عربي", price: "2.800", at: 49 },
+  { slug: "chicken-shawarma-burger", ar: "برجر شاورما دجاج", price: "1.700", at: 91 },
+  { slug: "cheesy-fries", ar: "بطاطس تشيزي", price: "1.800", at: 124 },
 ];
 
 const Food = () => {
@@ -102,7 +102,7 @@ const Food = () => {
 
 const Menu = () => {
   const frame = useCurrentFrame();
-  const scroll = interpolate(frame, [20, 128], [0, 9000 - SHOT_H], { ...clamp, easing: ease });
+  const scroll = interpolate(frame, [20, 140], [0, 9000 - SHOT_H], { ...clamp, easing: ease });
   return (
     <AbsoluteFill>
       <Backdrop />
@@ -117,7 +117,7 @@ const Menu = () => {
 const Sauce = () => {
   const frame = useCurrentFrame();
   const end = 4200 - SHOT_H;
-  const scroll = interpolate(frame, [12, 62], [0, end], { ...clamp, easing: ease });
+  const scroll = interpolate(frame, [12, 68], [0, end], { ...clamp, easing: ease });
   return (
     <AbsoluteFill>
       <Backdrop />
@@ -125,7 +125,7 @@ const Sauce = () => {
       <Phone enter={0}>
         <Shot src="product-scroll.jpg" scrollY={scroll} />
         <div style={{ position: "absolute", inset: 0 }}>
-          <Tap x={1000} y={2919 - end} at={78} />
+          <Tap x={1000} y={2919 - end} at={88} />
         </div>
       </Phone>
     </AbsoluteFill>
@@ -136,17 +136,17 @@ const Checkout = () => {
   const frame = useCurrentFrame();
   const shots = ["checkout-time.jpg", "checkout-car.jpg", "checkout-summary.jpg"];
   // Slide right-to-left between the three parts of the checkout page.
-  const pos = interpolate(frame, [0, 55, 70, 115, 130, 186], [0, 0, 1, 1, 2, 2], { ...clamp, easing: ease });
+  const pos = interpolate(frame, [0, 64, 80, 133, 150, 216], [0, 0, 1, 1, 2, 2], { ...clamp, easing: ease });
   return (
     <AbsoluteFill>
       <Backdrop />
-      <Sequence from={0} durationInFrames={62} layout="none">
+      <Sequence from={0} durationInFrames={72} layout="none">
         <Caption ar="حدد وقت الاستلام" en="Choose a pickup time" delay={4} />
       </Sequence>
-      <Sequence from={62} durationInFrames={60} layout="none">
+      <Sequence from={72} durationInFrames={68} layout="none">
         <Caption ar="ورقم سيارتك" en="Add your car plate" />
       </Sequence>
-      <Sequence from={122} layout="none">
+      <Sequence from={140} layout="none">
         <Caption ar="والدفع عند الاستلام" en="Pay when you collect" />
       </Sequence>
       <Phone enter={0}>
@@ -164,7 +164,7 @@ const Pickup = () => {
   const tapAt = HORN_FRAME - 2;
   const after = interpolate(frame, [tapAt + 6, tapAt + 14], [0, 1], clamp);
   const afterScroll = interpolate(frame, [tapAt + 22, tapAt + 55], [0, 2500 - SHOT_H], { ...clamp, easing: ease });
-  const staffAt = 110;
+  const staffAt = 128;
   const staff = spring({ frame: frame - staffAt, fps, config: { damping: 16 } });
   const glow = 0.5 + 0.5 * Math.sin((frame - staffAt) / 4);
   return (
@@ -221,10 +221,11 @@ const Cta = () => {
           boxShadow: `0 20px 60px rgba(229,65,53,0.55)`, transform: `scale(${pill * pulse})`,
         }}
       >
-        lahab-bh.netlify.app
+        {/* No web address here: the site's domain will change. */}
+        @lahab.bh
       </div>
-      <div style={{ marginTop: 60, display: "flex", gap: 34, fontFamily: body, fontWeight: 500, fontSize: 40, color: C.cream, opacity: info, direction: "ltr" }}>
-        <span>Instagram @lahab.bh</span>
+      <div style={{ position: "absolute", top: 1180, left: 0, right: 0, display: "flex", justifyContent: "center", gap: 34, fontFamily: body, fontWeight: 500, fontSize: 44, color: C.cream, opacity: info, direction: "ltr" }}>
+        <span>Instagram</span>
         <span style={{ color: C.yellow }}>•</span>
         <span>WhatsApp 33447433</span>
       </div>
