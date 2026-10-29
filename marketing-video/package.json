@@ -1,0 +1,24 @@
+{
+  "name": "lahab-marketing-video",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "screens": "node scripts/capture-screens.mjs",
+    "render": "remotion render src/index.ts LahabReel out/lahab-reel.mp4",
+    "still": "remotion still src/index.ts LahabReel"
+  },
+  "dependencies": {
+    "@remotion/cli": "^4.0.539",
+    "@remotion/google-fonts": "^4.0.539",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.539"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.64.1",
+    "@types/react": "^19.3.0",
+    "typescript": "~6.0.3"
+  }
+}
