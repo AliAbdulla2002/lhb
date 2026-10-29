@@ -27,6 +27,13 @@ then repeat for production.
    bucket, the realtime publication and the hourly retention job (`pg_cron`). If `pg_cron`
    is not enabled, enable it under Database → Extensions and re-run the last migration's
    cron block in the SQL editor.
+   **Without the CLI** (how staging was set up on 2026-10-29): paste all files from
+   `supabase/migrations/` in filename order into Dashboard → SQL Editor and run them as one
+   script. The editor warns about "destructive operations" and "tables without RLS". Both
+   are expected: the script only revokes permissions and enables RLS on every table itself.
+   Choose **Run without RLS**. This doesn't record migration history, so before using
+   `supabase db push` on that project later, mark them applied with
+   `npx supabase migration repair --status applied <version>` for each file.
 4. **Never run `supabase/seed.sql` against production.** It contains SAMPLE data for local development.
 5. **API settings** (Dashboard → Project Settings → Data API): exposed schemas = `public` only. The private `app` schema must stay unexposed.
 6. **Auth settings** (Dashboard → Authentication):
