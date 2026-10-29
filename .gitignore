@@ -1,2 +1,29 @@
+# dependencies
+node_modules/
+
+# build output
+build/
+dist/
+.react-router/
+
+# env & secrets
 .env
-node_modules
+.env.*
+!.env.example
+*.pem
+
+# supabase local state
+supabase/.temp/
+supabase/.branches/
+
+# test output
+coverage/
+playwright-report/
+test-results/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/

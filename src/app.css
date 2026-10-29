@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/*
+ * Lahab design tokens. Colours are PROVISIONAL — sampled by eye from the public
+ * Instagram avatar (red-orange flame calligraphy on cream). Replace with the official
+ * brand values when the owner supplies them; see src/config/brand.ts.
+ */
+@theme {
+  --color-ember-50: #fff3ef;
+  --color-ember-100: #ffe1d6;
+  --color-ember-200: #ffbea6;
+  --color-ember-400: #f2683f;
+  --color-ember-500: #e0401f;
+  --color-ember-600: #c42d15;
+  --color-ember-700: #9f2211;
+  --color-ember-800: #7c1c10;
+
+  --color-flame-300: #ffc46b;
+  --color-flame-400: #ffa53d;
+  --color-flame-500: #f6861a;
+
+  --color-cream-50: #fffaf1;
+  --color-cream-100: #fbf1de;
+  --color-cream-200: #f4e3c3;
+  --color-cream-300: #e9cf9f;
+
+  --color-char-700: #3a2a24;
+  --color-char-800: #241915;
+  --color-char-900: #17100d;
+  --color-char-950: #0e0907;
+
+  --font-display: "Alexandria", "Readex Pro", system-ui, sans-serif;
+  --font-sans: "Readex Pro", "Alexandria", system-ui, sans-serif;
+
+  --radius-card: 1.25rem;
+  --shadow-card: 0 1px 2px rgb(23 16 13 / 0.06), 0 8px 24px -12px rgb(23 16 13 / 0.18);
+  --shadow-glow: 0 0 0 1px rgb(246 134 26 / 0.25), 0 12px 40px -8px rgb(224 64 31 / 0.55);
+
+  --animate-flicker: flicker 3.2s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.5s ease-out both;
+
+  @keyframes flicker {
+    0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+    40% { transform: translateY(-2px) scale(1.02); opacity: 0.92; }
+    70% { transform: translateY(1px) scale(0.99); opacity: 1; }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-cream-50 text-char-900 font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-display;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-flame-500;
+  }
+  ::selection {
+    @apply bg-flame-300 text-char-900;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

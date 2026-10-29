@@ -1,6 +1,6 @@
 # Lahab BH — Phase 1: Repository Audit & Implementation Plan
 
-Status: **Draft for owner approval**. No code has been written, nothing deleted, and no database touched.
+Status: Phase 1 approved 2026-10-29 (D1–D8). Phase 2/3 foundation implemented — see checklist in section 10.
 Date: 2026-10-29
 
 ---
@@ -354,15 +354,18 @@ All of the DB and most E2E tests depend on decision **D3** (local Supabase via D
 
 **Phase 1 — Audit & plan** ✅ (this document)
 
-**Phase 2/3 — Foundation (recommended combined order)**
-- [ ] git init, move template to `legacy/`, `.gitignore`, `.env.example`
-- [ ] Scaffold Vite + React + TS + Tailwind v4 + Router + i18n + Query; lint/typecheck scripts
-- [ ] Supabase CLI init; migrations: enums, core tables, triggers, helper fns, RLS, storage policies
-- [ ] Dev-only seed (clearly fake items) + super-admin provisioning script
-- [ ] pgTAP RLS suite green
-- [ ] Design tokens from verified brand assets; UI kit; RTL/LTR; layouts
-- [ ] Landing, menu, product detail, offers, about, contact, policy pages reading from DB
-- [ ] Auth pages + account/profile
+**Phase 2/3 — Foundation** (2026-10-29; decisions D1–D8 approved)
+- [x] git init, template moved to `legacy/express-template/`, `.gitignore`, `.env.example`
+- [x] Vite + React Router (framework, static + prerender) + TS 6 + Tailwind 4 + i18n + TanStack Query; lint/typecheck scripts
+- [x] Supabase config + migrations: enums, core tables, triggers, helper fns, pricing, order creation, status workflow, arrival notify/ack, RLS, storage policies, realtime, retention job
+- [x] Dev-only seed (labelled SAMPLE) + super-admin provisioning script
+- [x] DB test suite green (67 tests, PGlite). **Still to run against the real local Supabase stack** (needs Docker).
+- [x] Provisional design tokens, UI kit, RTL/LTR, layouts (official logo/colours/photos still pending)
+- [x] Landing, menu, product detail + customisation, offers, about, contact, policy pages reading from DB
+- [x] Cart with server-side quote and unavailable-item handling (checkout button disabled until Phase 5)
+- [x] Auth pages (register, verify callback, login, logout, forgot/reset) + account profile
+- [ ] Edge Function wrappers for `app.*` functions (Phase 5/6, with the flows that call them)
+- [ ] Order history, favourites UI, reorder (Phase 5)
 
 **Phase 4 — Admin**
 - [ ] Admin shell (sidebar, responsive), role guards
