@@ -46,5 +46,5 @@ test("switches to English", async () => {
   expect(i18n.language).toBe("en");
   expect(await screen.findByRole("heading", { name: "Chicken shawarma" })).toBeInTheDocument();
   expect(screen.getByText("Currently unavailable")).toBeInTheDocument();
-  expect(screen.getByRole("link", { name: "View Chicken shawarma" })).toHaveAttribute("href", "/menu/item/chicken");
+  expect(screen.getByRole("link", { name: /Chicken shawarma/ })).toHaveAttribute("href", "/menu/item/chicken");
 });

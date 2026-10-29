@@ -16,7 +16,7 @@ test("home page renders in Arabic RTL with featured items", async ({ page }) => 
 test("language switch flips to English LTR and persists", async ({ page, isMobile }) => {
   await page.goto("/");
   if (isMobile) await page.getByRole("button", { name: "فتح القائمة" }).click();
-  await page.getByRole("button", { name: "تغيير اللغة" }).first().click();
+  await page.getByRole("button", { name: "English" }).filter({ visible: true }).first().click();
   await expect(page.locator("html")).toHaveAttribute("dir", "ltr");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Shawarma, fired up");
   await page.reload();
@@ -42,7 +42,7 @@ test("customise a product, add to cart and see server-priced totals", async ({ p
   await page.getByRole("button", { name: "زيادة الكمية" }).click();
   await page.screenshot({ path: `test-results/screens/product-${test.info().project.name}.png`, fullPage: true });
   await page.getByRole("button", { name: /أضف للسلة/ }).click();
-  await expect(page.getByRole("link", { name: /السلة \(2\)/ })).toBeVisible();
+  await expect(page.getByRole("link", { name: /السلة\s*2/})).toBeVisible();
 
   await page.goto("/cart");
   await expect(page.getByText("3.000").last()).toBeVisible();

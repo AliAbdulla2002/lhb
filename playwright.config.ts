@@ -16,7 +16,7 @@ export default defineConfig({
   ],
   webServer: {
     // Production build served statically, pointed at the stubbed Supabase host.
-    command: `npx react-router build && npx vite preview --outDir build/client --host 127.0.0.1 --port ${PORT} --strictPort`,
+    command: `npm run build && npx vite preview --outDir build/client --host 127.0.0.1 --port ${PORT} --strictPort`,
     url: `http://127.0.0.1:${PORT}`,
     timeout: 180_000,
     reuseExistingServer: !process.env.CI,

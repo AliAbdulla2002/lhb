@@ -273,7 +273,7 @@ export default function AdminPickupQueue() {
             <h2 id="waiting-title" className="flex items-center gap-2 text-xl font-black">
               <CarFront className="size-5 text-ember-500" aria-hidden />
               {t("pickupQueue.waiting")}
-              <span className="rounded-full bg-ember-500 px-2 text-sm text-white">{waiting.length}</span>
+              <span className="rounded-full bg-ember-600 px-2 text-sm text-white">{waiting.length}</span>
             </h2>
             {waiting.length === 0 ? (
               <p className="rounded-2xl border border-dashed border-char-900/15 p-6 text-center text-char-700">{t("pickupQueue.empty")}</p>

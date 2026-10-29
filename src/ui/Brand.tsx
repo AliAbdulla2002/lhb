@@ -8,7 +8,8 @@ export function Wordmark({ className, tone = "dark" }: { className?: string; ton
     <span className={cn("inline-flex items-center gap-1.5 font-display font-black leading-none", className)}>
       <Flame className="size-[1.1em] text-ember-500 motion-safe:animate-flicker" aria-hidden />
       <span className={tone === "dark" ? "text-char-900" : "text-cream-50"}>لهب</span>
-      <span className="text-[0.55em] tracking-[0.2em] text-ember-500" dir="ltr">
+      {/* Small text: darker red on light backgrounds, lighter flame on dark, for contrast. */}
+      <span className={cn("text-[0.55em] tracking-[0.2em]", tone === "dark" ? "text-ember-700" : "text-flame-400")} dir="ltr">
         LAHAB
       </span>
     </span>

@@ -1,5 +1,6 @@
 import { Phone } from "lucide-react";
 import { InstagramIcon } from "~/ui/Brand";
+import { seo } from "~/lib/seo";
 import type { Route } from "./+types/contact";
 import { useLang } from "~/i18n";
 import { env } from "~/config/env";
@@ -10,10 +11,8 @@ import { buttonClass } from "~/ui/Button";
 import { Container, PageHeader } from "~/ui/Container";
 import { BackendNotice, EmptyState, ErrorState, Skeleton } from "~/ui/Feedback";
 
-export const meta: Route.MetaFunction = () => [
-  { title: "التواصل والموقع | Contact — لهب LAHAB" },
-  { name: "description", content: "موقع مطعم لهب في عالي وأرقام التواصل وأوقات العمل. Lahab location, phone and hours." },
-];
+export const meta: Route.MetaFunction = () =>
+  seo({ title: "التواصل والموقع | Contact — لهب LAHAB", description: "موقع مطعم لهب في عالي وأرقام التواصل. Lahab location and phone numbers.", path: "/contact" });
 
 export default function ContactPage() {
   const { t } = useLang();

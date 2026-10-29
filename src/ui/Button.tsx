@@ -9,7 +9,7 @@ type Size = "sm" | "md" | "lg";
 const base =
   "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-[background-color,box-shadow,transform,color] duration-200 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50 select-none";
 const variants: Record<Variant, string> = {
-  primary: "bg-ember-500 text-white shadow-[0_8px_24px_-10px_rgb(224_64_31/0.8)] hover:bg-ember-600",
+  primary: "bg-ember-600 text-white shadow-[0_8px_24px_-10px_rgb(224_64_31/0.8)] hover:bg-ember-700",
   secondary: "bg-char-900 text-cream-50 hover:bg-char-800",
   ghost: "text-char-900 hover:bg-char-900/5",
   "outline-light": "border border-cream-50/40 text-cream-50 hover:bg-cream-50/10",

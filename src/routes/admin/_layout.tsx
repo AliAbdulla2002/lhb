@@ -28,7 +28,7 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
           className={({ isActive }) =>
             cn(
               "flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-colors",
-              isActive ? "bg-ember-500 text-white" : "text-cream-100/80 hover:bg-cream-50/10 hover:text-cream-50",
+              isActive ? "bg-ember-600 text-white" : "text-cream-100/80 hover:bg-cream-50/10 hover:text-cream-50",
             )
           }
         >

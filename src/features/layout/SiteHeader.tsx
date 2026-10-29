@@ -23,7 +23,7 @@ export function LanguageSwitch({ className }: { className?: string }) {
     <button
       type="button"
       onClick={() => setLang(lang === "ar" ? "en" : "ar")}
-      aria-label={t("lang.label")}
+      title={t("lang.label")}
       lang={lang === "ar" ? "en" : "ar"}
       className={cn("inline-flex h-10 items-center gap-1.5 rounded-full px-3 text-sm font-medium hover:bg-char-900/5", className)}
     >
@@ -37,17 +37,11 @@ function CartButton() {
   const { t } = useLang();
   const count = useCartCount();
   return (
-    <Link
-      to="/cart"
-      className="relative grid size-10 place-items-center rounded-full hover:bg-char-900/5"
-      aria-label={`${t("nav.cart")}${count ? ` (${count})` : ""}`}
-    >
+    <Link to="/cart" className="relative grid size-10 place-items-center rounded-full hover:bg-char-900/5">
       <ShoppingBag className="size-5" aria-hidden />
+      <span className="sr-only">{t("nav.cart")}</span>
       {count > 0 && (
-        <span
-          aria-hidden
-          className="absolute -end-0.5 -top-0.5 grid min-w-5 place-items-center rounded-full bg-ember-500 px-1 text-[0.7rem] font-bold leading-5 text-white motion-safe:animate-fade-up"
-        >
+        <span className="absolute -end-0.5 -top-0.5 grid min-w-5 place-items-center rounded-full bg-ember-600 px-1 text-[0.7rem] font-bold leading-5 text-white motion-safe:animate-fade-up">
           {count}
         </span>
       )}
@@ -79,7 +73,7 @@ export function SiteHeader() {
         {t("nav.skipToContent")}
       </a>
       <Container className="flex h-16 items-center gap-2">
-        <Link to="/" className="me-2 text-2xl" aria-label="LAHAB لهب">
+        <Link to="/" className="me-2 text-2xl">
           <Wordmark />
         </Link>
 

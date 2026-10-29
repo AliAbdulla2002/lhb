@@ -19,7 +19,7 @@ export function MobileCartBar() {
     <div className="fixed inset-x-0 bottom-0 z-30 p-3 sm:hidden">
       <Link
         to="/cart"
-        className="flex h-14 items-center justify-between gap-3 rounded-full bg-ember-500 px-5 font-semibold text-white shadow-[var(--shadow-glow)] motion-safe:animate-fade-up"
+        className="flex h-14 items-center justify-between gap-3 rounded-full bg-ember-600 px-5 font-semibold text-white shadow-[var(--shadow-glow)] motion-safe:animate-fade-up"
       >
         <span className="inline-flex items-center gap-2">
           <ShoppingBag className="size-5" aria-hidden />

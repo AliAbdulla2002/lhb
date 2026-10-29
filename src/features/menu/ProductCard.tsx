@@ -36,7 +36,6 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <Link
       to={`/menu/item/${product.slug}`}
-      aria-label={t("menu.viewItem", { name })}
       className="group flex flex-col overflow-hidden rounded-[var(--radius-card)] bg-white shadow-[var(--shadow-card)] transition hover:-translate-y-0.5 hover:shadow-[var(--shadow-glow)]"
     >
       <div className="relative aspect-[4/3] overflow-hidden">

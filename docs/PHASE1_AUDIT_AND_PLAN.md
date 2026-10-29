@@ -395,10 +395,13 @@ All of the DB and most E2E tests depend on decision **D3** (local Supabase via D
 - [x] Missed-alert recovery: queue rebuilt from the database (realtime + 20 s polling + refetch on focus); staff-controlled chime, tab-title badge, optional browser alerts
 - [ ] Push notifications to closed browsers (not required: the persistent queue covers missed alerts)
 
-**Phase 7 — QA & deploy**
-- [ ] Lint, typecheck, build, all tests; secret scan
-- [ ] SEO (meta, OG, JSON-LD `Restaurant` with verified data, sitemap, robots), performance/a11y pass
-- [ ] `DEPLOYMENT.md` (Supabase project, migrations, functions, env, hosting e.g. Vercel/Netlify/Cloudflare Pages, rollback), final report
+**Phase 7 — QA & deploy** (2026-10-29)
+- [x] Lint, typecheck, build, all tests, secret scan
+- [x] SEO: titles and descriptions, canonical, Open Graph, `Restaurant` JSON-LD (verified facts only), sitemap, robots
+- [x] Security headers (CSP, HSTS, …), SPA fallback rewrites; database-wide security tests
+- [x] Accessibility: axe audit (WCAG 2.1 AA) on key pages in both languages; contrast and accessible-name fixes
+- [x] DEPLOYMENT (incl. rollback), SECURITY, TESTING, DATA_RETENTION, OWNER_CHECKLIST, FINAL_REPORT
+- [ ] Run against a real Supabase stack and real phones (needs Docker / a staging project — see docs/TESTING.md)
 
 ---
 

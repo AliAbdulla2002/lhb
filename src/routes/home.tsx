@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { ArrowLeft, ArrowRight, CarFront, Flame, MapPin } from "lucide-react";
+import { restaurantJsonLd, seo } from "~/lib/seo";
 import type { Route } from "./+types/home";
 import { useLang } from "~/i18n";
 import { env } from "~/config/env";
@@ -12,11 +13,12 @@ import { Container } from "~/ui/Container";
 import { BackendNotice, EmptyState, ErrorState } from "~/ui/Feedback";
 
 export const meta: Route.MetaFunction = () => [
-  { title: "لهب | LAHAB — شاورما أصلية في عالي، البحرين" },
-  { name: "description", content: "اطلب شاورما لهب أونلاين واستلم من سيارتك في عالي. Order Lahab shawarma online for car pickup in A'ali, Bahrain." },
-  { property: "og:title", content: "لهب | LAHAB" },
-  { property: "og:description", content: "Authentic shawarma — order ahead for car pickup in A'ali, Bahrain." },
-  { property: "og:type", content: "website" },
+  ...seo({
+    title: "لهب | LAHAB — شاورما أصلية في عالي، البحرين",
+    description: "اطلب شاورما لهب أونلاين واستلم من سيارتك في عالي. Order Lahab shawarma online for car pickup in A'ali, Bahrain.",
+    path: "/",
+  }),
+  restaurantJsonLd(),
 ];
 
 const HERO_KEYS = ["home.hero.title", "home.hero.subtitle"];

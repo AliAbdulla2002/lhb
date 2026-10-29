@@ -175,8 +175,9 @@ function PickupScreen({ order }: { order: CustomerOrder }) {
               <dd className="mt-1 text-sm text-cream-100/70">{t("pickup.noCar")}</dd>
             )}
           </div>
+        </dl>
           {order.branches && (
-            <div className="col-span-2 flex items-start gap-2 rounded-2xl bg-cream-50/5 p-4 text-sm">
+            <div className="flex items-start gap-2 rounded-2xl bg-cream-50/5 p-4 text-sm">
               <MapPin className="mt-0.5 size-4 shrink-0 text-flame-400" aria-hidden />
               <div>
                 <p className="font-semibold">{pick(order.branches, "name")}</p>
@@ -184,7 +185,6 @@ function PickupScreen({ order }: { order: CustomerOrder }) {
               </div>
             </div>
           )}
-        </dl>
 
         <p className="text-center text-sm text-cream-100/70">{t(`orders.step.${order.status}`)}</p>
 

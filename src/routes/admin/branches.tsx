@@ -424,7 +424,7 @@ export default function AdminBranches() {
       ) : (
         <div key={branch.id} className="space-y-5">
           {branch.pickup_paused && (
-            <p className="flex items-center gap-2 rounded-xl bg-ember-500 px-4 py-3 font-semibold text-white">
+            <p className="flex items-center gap-2 rounded-xl bg-ember-600 px-4 py-3 font-semibold text-white">
               <PauseCircle className="size-5" aria-hidden />
               {t("admin.branches.paused")}
               {branch.pickup_paused_reason && <span className="font-normal">— {branch.pickup_paused_reason}</span>}

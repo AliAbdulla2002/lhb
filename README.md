@@ -3,8 +3,9 @@
 Customer website, ordering and car-pickup system for Lahab restaurant, A'ali, Bahrain.
 
 - **Frontend:** React 19 + React Router 8 (framework mode, static SPA with prerendered public pages) + Vite 8 + TypeScript 6 + Tailwind CSS 4
-- **Backend:** Supabase (Postgres, Auth, Realtime, Storage, Edge Functions). No other server.
-- **Plan & status:** [docs/PHASE1_AUDIT_AND_PLAN.md](docs/PHASE1_AUDIT_AND_PLAN.md)
+- **Backend:** Supabase (Postgres, Auth, Realtime, Storage). No other server; Edge Functions are reserved for a future payment integration.
+- **Status:** [docs/FINAL_REPORT.md](docs/FINAL_REPORT.md) · plan and checklist: [docs/PHASE1_AUDIT_AND_PLAN.md](docs/PHASE1_AUDIT_AND_PLAN.md)
+- **Docs:** [deployment & rollback](docs/DEPLOYMENT.md) · [security](docs/SECURITY.md) · [testing](docs/TESTING.md) · [data retention](docs/DATA_RETENTION.md) · [payments](docs/PAYMENTS.md) · [owner checklist](docs/OWNER_CHECKLIST.md)
 
 ## Project layout
 
@@ -71,10 +72,4 @@ Sign up through the site, confirm the email, then run `supabase/scripts/provisio
 
 ## Hosting
 
-The build is static. The host must:
-
-1. Serve `build/client`.
-2. Serve prerendered pages (`/`, `/menu`, `/offers`, `/about`, `/contact`, `/privacy`, `/terms`) from their `index.html`.
-3. Rewrite every other non-file route to `/__spa-fallback.html` (not `/index.html`).
-
-Full deployment and rollback steps are written in Phase 7.
+The build is static (`build/client`), with prerendered public pages plus an SPA fallback. `npm run build` also writes the sitemap, robots.txt, `_redirects` and `_headers`. Host requirements and rollback are in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).

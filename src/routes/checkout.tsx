@@ -264,7 +264,7 @@ function CheckoutForm() {
                           onClick={() => setPickupAt(s.slot_start)}
                           className={cn(
                             "shrink-0 rounded-full border px-4 py-2 text-sm font-semibold tabular-nums transition",
-                            selected ? "border-ember-500 bg-ember-500 text-white" : "border-char-900/15 bg-white hover:border-char-900/40",
+                            selected ? "border-ember-600 bg-ember-600 text-white" : "border-char-900/15 bg-white hover:border-char-900/40",
                             !s.available && "cursor-not-allowed line-through opacity-40",
                           )}
                         >

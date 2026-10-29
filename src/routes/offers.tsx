@@ -1,4 +1,5 @@
 import { BadgePercent } from "lucide-react";
+import { seo } from "~/lib/seo";
 import type { Route } from "./+types/offers";
 import { useLang } from "~/i18n";
 import { env } from "~/config/env";
@@ -7,10 +8,8 @@ import { PromotionCard } from "~/features/content/PromotionCard";
 import { Container, PageHeader } from "~/ui/Container";
 import { BackendNotice, EmptyState, ErrorState, Skeleton } from "~/ui/Feedback";
 
-export const meta: Route.MetaFunction = () => [
-  { title: "العروض | Offers — لهب LAHAB" },
-  { name: "description", content: "عروض مطعم لهب الحالية. Current Lahab offers." },
-];
+export const meta: Route.MetaFunction = () =>
+  seo({ title: "العروض | Offers — لهب LAHAB", description: "عروض مطعم لهب الحالية. Current Lahab offers.", path: "/offers" });
 
 export default function OffersPage() {
   const { t } = useLang();

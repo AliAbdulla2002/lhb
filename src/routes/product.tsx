@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { ArrowLeft, ArrowRight, Check, Minus, Plus } from "lucide-react";
+import { seo } from "~/lib/seo";
 import type { Route } from "./+types/product";
 import { useLang } from "~/i18n";
 import { env } from "~/config/env";
@@ -19,7 +20,7 @@ import { useToast } from "~/ui/Toast";
 import { formatBHD } from "~/lib/money";
 import { cn } from "~/ui/cn";
 
-export const meta: Route.MetaFunction = () => [{ title: "لهب | LAHAB" }];
+export const meta: Route.MetaFunction = ({ params }) => seo({ title: "لهب | LAHAB", path: `/menu/item/${params.productSlug}` });
 
 function OptionGroup({
   option,

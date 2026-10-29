@@ -1,13 +1,15 @@
 import { useMatches } from "react-router";
+import { seo } from "~/lib/seo";
 import type { Route } from "./+types/policy";
 import { useLang } from "~/i18n";
 import { ContentBlock } from "~/features/content/ContentBlock";
 import { Container, PageHeader } from "~/ui/Container";
 
 // Mounted twice in routes.ts with ids "privacy" and "terms".
-export const meta: Route.MetaFunction = ({ location }) => [
-  { title: location.pathname === "/terms" ? "الشروط والأحكام | Terms — لهب LAHAB" : "سياسة الخصوصية | Privacy — لهب LAHAB" },
-];
+export const meta: Route.MetaFunction = ({ location }) =>
+  location.pathname === "/terms"
+    ? seo({ title: "الشروط والأحكام | Terms — لهب LAHAB", path: "/terms" })
+    : seo({ title: "سياسة الخصوصية | Privacy — لهب LAHAB", path: "/privacy" });
 
 export default function PolicyPage() {
   const { t } = useLang();

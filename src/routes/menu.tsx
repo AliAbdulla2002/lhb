@@ -1,4 +1,5 @@
 import { NavLink, useParams } from "react-router";
+import { seo } from "~/lib/seo";
 import type { Route } from "./+types/menu";
 import { useLang } from "~/i18n";
 import { env } from "~/config/env";
@@ -9,10 +10,12 @@ import { BackendNotice, EmptyState, ErrorState, Skeleton } from "~/ui/Feedback";
 import { ButtonLink } from "~/ui/Button";
 import { cn } from "~/ui/cn";
 
-export const meta: Route.MetaFunction = () => [
-  { title: "المنيو | Menu — لهب LAHAB" },
-  { name: "description", content: "منيو مطعم لهب — شاورما وبوكسات وسلطات. Lahab menu with prices in BHD." },
-];
+export const meta: Route.MetaFunction = ({ params }) =>
+  seo({
+    title: "المنيو | Menu — لهب LAHAB",
+    description: "منيو مطعم لهب — شاورما وأكثر، بالأسعار بالدينار البحريني. Lahab menu with prices in BHD.",
+    path: params.categorySlug ? `/menu/${params.categorySlug}` : "/menu",
+  });
 
 export default function MenuPage() {
   const { t, pick } = useLang();

@@ -47,7 +47,7 @@ const STATUS_TONES: Record<string, string> = {
   ready: "bg-emerald-100 text-emerald-900",
   completed: "bg-char-900/10 text-char-800",
   cancelled: "bg-ember-50 text-ember-700",
-  arrived: "bg-ember-500 text-white",
+  arrived: "bg-ember-600 text-white",
   acknowledged: "bg-emerald-600 text-white",
   handed_over: "bg-char-900/10 text-char-800",
   not_arrived: "bg-char-900/5 text-char-700",
