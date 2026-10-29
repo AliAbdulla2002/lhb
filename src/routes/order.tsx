@@ -69,7 +69,7 @@ function OrderView({ order }: { order: CustomerOrder }) {
   const live = order.status !== "completed" && order.status !== "cancelled";
 
   return (
-    <Container className="grid gap-6 py-8 lg:grid-cols-[1fr_22rem] lg:py-12">
+    <Container className="grid grid-cols-1 gap-6 py-8 lg:grid-cols-[1fr_22rem] lg:py-12">
       <div className="space-y-6">
         {justPlaced && (
           <p role="status" className="flex items-center gap-3 rounded-2xl bg-char-950 px-5 py-4 text-lg font-bold text-cream-50 motion-safe:animate-fade-up">

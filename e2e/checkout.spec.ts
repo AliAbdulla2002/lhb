@@ -152,6 +152,20 @@ test("customers without a phone number are asked for one first", async ({ page }
   await expect(page.getByRole("button", { name: /أرسل الطلب/ })).toBeDisabled();
 });
 
+test("checkout fits the phone screen (no sideways scroll)", async ({ page }) => {
+  await stubCustomer(page);
+  // A long row of pickup times is what used to stretch the page on phones.
+  await page.route(`${STUB_SUPABASE_URL}/rest/v1/rpc/get_pickup_slots`, (route) => {
+    const base = Math.ceil(Date.now() / 900_000) * 900_000 + 900_000;
+    const slots = Array.from({ length: 10 }, (_, i) => ({ slot_start: new Date(base + i * 900_000).toISOString(), available: true }));
+    return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(slots), headers: { "access-control-allow-origin": "*" } });
+  });
+  await page.goto("/checkout");
+  await expect(page.getByRole("radiogroup", { name: "اختر وقت" }).getByRole("radio")).toHaveCount(10);
+  const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+  expect(overflow).toBeLessThanOrEqual(0);
+});
+
 test("full pickup slots cannot be chosen", async ({ page }) => {
   await stubCustomer(page);
   await page.goto("/checkout");

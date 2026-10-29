@@ -22,7 +22,7 @@ export default function ContactPage() {
   return (
     <>
       <PageHeader title={t("contact.title")} />
-      <Container className="grid gap-8 py-10 lg:grid-cols-[2fr_1fr]">
+      <Container className="grid grid-cols-1 gap-8 py-10 lg:grid-cols-[2fr_1fr]">
         <div className="space-y-5">
           {!env ? (
             <BackendNotice />

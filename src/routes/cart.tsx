@@ -110,7 +110,7 @@ export default function CartPage() {
   return (
     <>
       <PageHeader title={t("cart.title")} subtitle={t("cart.itemCount", { count: lines.reduce((n, l) => n + l.quantity, 0) })} />
-      <Container className="grid gap-8 py-10 lg:grid-cols-[1fr_22rem]">
+      <Container className="grid grid-cols-1 gap-8 py-10 lg:grid-cols-[1fr_22rem]">
         <div className="space-y-4">
           {!env && <BackendNotice />}
           {issues.size > 0 && (

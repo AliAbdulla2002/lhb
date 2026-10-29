@@ -194,7 +194,7 @@ function CheckoutForm() {
   if (settings.isError || branches.isError) return <Container className="py-12"><ErrorState onRetry={() => { void settings.refetch(); void branches.refetch(); }} /></Container>;
   if (settings.isPending || branches.isPending || profile.isPending) {
     return (
-      <Container className="grid gap-6 py-10 lg:grid-cols-[1fr_22rem]">
+      <Container className="grid grid-cols-1 gap-6 py-10 lg:grid-cols-[1fr_22rem]">
         <Skeleton className="h-96" />
         <Skeleton className="h-64" />
       </Container>
@@ -205,7 +205,7 @@ function CheckoutForm() {
 
   return (
     <form onSubmit={onSubmit} noValidate>
-      <Container className="grid gap-6 py-8 lg:grid-cols-[1fr_22rem] lg:py-10">
+      <Container className="grid grid-cols-1 gap-6 py-8 lg:grid-cols-[1fr_22rem] lg:py-10">
         <div className="space-y-5">
           {blockers.map((b) => (
             <p key={b} role="alert" className="flex items-start gap-2 rounded-2xl bg-ember-50 px-4 py-3 text-ember-800">
