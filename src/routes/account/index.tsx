@@ -8,6 +8,7 @@ import { readStoredLang, setLang, useLang } from "~/i18n";
 import { requireSupabase } from "~/lib/supabase";
 import type { Profile } from "~/lib/api/types";
 import { RequireAuth } from "~/features/auth/RequireAuth";
+import { AccountTabs } from "~/features/account/AccountTabs";
 import { useAuth } from "~/features/auth/AuthProvider";
 import { profileSchema, type ProfileInput } from "~/features/auth/schemas";
 import { FormAlert } from "~/features/auth/AuthCard";
@@ -84,6 +85,7 @@ function AccountContent() {
   return (
     <>
       <PageHeader title={t("account.title")} subtitle={user!.email} />
+      <AccountTabs />
       <Container className="py-10">
         <section aria-labelledby="profile-title" className="max-w-lg space-y-5 rounded-[var(--radius-card)] bg-white p-6 shadow-[var(--shadow-card)]">
           <h2 id="profile-title" className="text-xl font-black">{t("account.profile")}</h2>

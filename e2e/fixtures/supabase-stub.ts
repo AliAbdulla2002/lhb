@@ -44,13 +44,15 @@ const detail = {
 const branches = [
   {
     id: "b1", slug: "aali", name_ar: "عالي", name_en: "A'ali", address_ar: "مبنى 2542، طريق 4270، عالي",
-    address_en: "Building 2542, Road 4270, A'ali", phone: "+97333447433", maps_url: null, pickup_paused: false,
+    address_en: "Building 2542, Road 4270, A'ali", phone: "+97333447433", maps_url: null, pickup_paused: false, accepts_pickup: true, pickup_lead_minutes: 15,
+    pickup_instructions_ar: "اوقف في مواقف الاستلام قدام المطعم.", pickup_instructions_en: "Park in the pickup bays in front of the restaurant.",
     business_hours: [0, 1, 2, 3, 4, 5, 6].map((weekday) => ({ weekday, opens_at: "17:00:00", closes_at: "00:00:00", closes_next_day: true })),
   },
 ];
 const settings = {
   display_name_ar: "لهب", display_name_en: "LAHAB", tagline_ar: "شاورما أصلية 🔥", tagline_en: "Authentic Shawarma 🔥",
   phones: ["+97333447433", "+97317232805"], whatsapp: null, instagram_url: "https://www.instagram.com/lahab.bh/", ordering_enabled: true,
+  cash_on_pickup_enabled: true, online_payment_enabled: false,
 };
 const content = [
   { key: "home.hero.title", value_ar: "شاورما على اللهب", value_en: "Shawarma, fired up" },

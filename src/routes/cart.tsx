@@ -154,11 +154,15 @@ export default function CartPage() {
               </div>
             </dl>
           )}
-          {/* Checkout (server-side order creation + car pickup) lands in Phase 5. */}
-          <Button size="lg" className="w-full" disabled>
-            {t("cart.checkout")}
-          </Button>
-          <p className="text-center text-xs text-char-700/70">{t("cart.checkoutSoon")}</p>
+          {issues.size > 0 || !fresh ? (
+            <Button size="lg" className="w-full" disabled>
+              {t("cart.checkout")}
+            </Button>
+          ) : (
+            <ButtonLink to="/checkout" size="lg" className="w-full">
+              {t("cart.checkout")}
+            </ButtonLink>
+          )}
         </aside>
       </Container>
     </>

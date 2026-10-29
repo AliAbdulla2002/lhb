@@ -19,7 +19,7 @@ export async function signIn(page: Page, email = "manager@example.test") {
     token_type: "bearer",
     expires_in: 3600,
     expires_at: exp,
-    user: { id: ADMIN_USER_ID, aud: "authenticated", role: "authenticated", email, app_metadata: {}, user_metadata: {}, created_at: new Date().toISOString() },
+    user: { id: ADMIN_USER_ID, aud: "authenticated", role: "authenticated", email, email_confirmed_at: new Date().toISOString(), app_metadata: {}, user_metadata: {}, created_at: new Date().toISOString() },
   };
   const storageKey = `sb-${new URL(STUB_SUPABASE_URL).hostname.split(".")[0]}-auth-token`;
   await page.addInitScript(([key, value]) => window.localStorage.setItem(key!, value!), [storageKey, JSON.stringify(session)]);

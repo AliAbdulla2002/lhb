@@ -9,6 +9,7 @@ import type { ProductDetail, ProductOption } from "~/lib/api/types";
 import { cart, MAX_QUANTITY } from "~/features/cart/store";
 import { initialSelections, invalidOptions, selectedLabels, toggleValue, unitEstimate, type Selections } from "~/features/menu/customize";
 import { ProductImage } from "~/features/menu/ProductCard";
+import { FavoriteButton } from "~/features/favorites/favorites";
 import { Button, ButtonLink } from "~/ui/Button";
 import { Container } from "~/ui/Container";
 import { BackendNotice, EmptyState, ErrorState, Skeleton } from "~/ui/Feedback";
@@ -147,7 +148,10 @@ function ProductView({ product }: { product: ProductDetail }) {
 
         <div className="space-y-6">
           <div className="space-y-3">
-            <h1 className="text-4xl font-black leading-tight">{name}</h1>
+            <div className="flex items-start justify-between gap-3">
+              <h1 className="text-4xl font-black leading-tight">{name}</h1>
+              <FavoriteButton productId={product.id} />
+            </div>
             {pick(product, "description") && <p className="text-lg text-char-700">{pick(product, "description")}</p>}
             <p className="text-2xl font-bold text-ember-600">
               <Price value={product.base_price} />

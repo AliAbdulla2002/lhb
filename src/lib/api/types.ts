@@ -94,6 +94,10 @@ export interface Branch {
   phone: string | null;
   maps_url: string | null;
   pickup_paused: boolean;
+  accepts_pickup: boolean;
+  pickup_lead_minutes: number;
+  pickup_instructions_ar: string | null;
+  pickup_instructions_en: string | null;
   business_hours: BusinessHours[];
 }
 
@@ -106,6 +110,8 @@ export interface RestaurantSettings {
   whatsapp: string | null;
   instagram_url: string | null;
   ordering_enabled: boolean;
+  cash_on_pickup_enabled: boolean;
+  online_payment_enabled: boolean;
 }
 
 export interface SiteContent {

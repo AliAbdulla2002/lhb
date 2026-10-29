@@ -83,7 +83,7 @@ export async function fetchBranches(): Promise<Branch[]> {
     await requireSupabase()
       .from("branches")
       .select(
-        "id, slug, name_ar, name_en, address_ar, address_en, phone, maps_url, pickup_paused, business_hours(weekday, opens_at, closes_at, closes_next_day)",
+        "id, slug, name_ar, name_en, address_ar, address_en, phone, maps_url, pickup_paused, accepts_pickup, pickup_lead_minutes, pickup_instructions_ar, pickup_instructions_en, business_hours(weekday, opens_at, closes_at, closes_next_day)",
       )
       .eq("is_active", true)
       .order("sort_order"),
@@ -94,7 +94,7 @@ export async function fetchSettings(): Promise<RestaurantSettings> {
   return unwrap(
     await requireSupabase()
       .from("restaurant_settings")
-      .select("display_name_ar, display_name_en, tagline_ar, tagline_en, phones, whatsapp, instagram_url, ordering_enabled")
+      .select("display_name_ar, display_name_en, tagline_ar, tagline_en, phones, whatsapp, instagram_url, ordering_enabled, cash_on_pickup_enabled, online_payment_enabled")
       .single(),
   );
 }

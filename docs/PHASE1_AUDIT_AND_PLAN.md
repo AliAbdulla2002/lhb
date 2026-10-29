@@ -377,10 +377,14 @@ All of the DB and most E2E tests depend on decision **D3** (local Supabase via D
 - [x] Admin DB API tests (13) + admin UI smoke tests (18)
 - Architecture change: staff actions call actor-bound database functions (`public.transition_order_status`, `admin_*`) instead of Edge Function wrappers. Same server-side checks, testable without Docker. Edge Functions remain for secret-bearing work (payment webhooks).
 
-**Phase 5 — Ordering**
-- [ ] Cart (persisted), server quote, unavailable-item handling
-- [ ] Checkout, `create-order` with idempotency, confirmation, tracking, history, reorder, favorites
-- [ ] Payment adapter skeleton (inactive)
+**Phase 5 — Ordering** (2026-10-29)
+- [x] `public.place_order` (bound to the signed-in user) and `public.get_pickup_slots`; DB tests
+- [x] Checkout: branch, ASAP or scheduled slot (full slots disabled), car plate + colour, phone check, notes, coupon, cash on pickup, server-priced summary
+- [x] Duplicate protection: per-request idempotency key (reused on retry, reset when the request changes) + double-tap guard
+- [x] Order confirmation with live status (Realtime + 15 s polling fallback), customer cancel while pending
+- [x] Order history with "order again" (re-validated and re-priced by the server), favourites
+- [x] Online payment documented, not activated — see docs/PAYMENTS.md
+- [ ] Guest checkout (deferred by decision D4)
 
 **Phase 6 — Pickup & Digital Horn**
 - [ ] Vehicle capture, pickup screen, `notify-arrival`, staff queue, ack/handover, realtime + recovery

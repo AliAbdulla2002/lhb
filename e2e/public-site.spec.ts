@@ -46,7 +46,7 @@ test("customise a product, add to cart and see server-priced totals", async ({ p
 
   await page.goto("/cart");
   await expect(page.getByText("3.000").last()).toBeVisible();
-  await expect(page.getByRole("button", { name: "متابعة الطلب" })).toBeDisabled();
+  await expect(page.getByRole("link", { name: "متابعة الطلب" })).toHaveAttribute("href", "/checkout");
   await page.screenshot({ path: `test-results/screens/cart-${test.info().project.name}.png`, fullPage: true });
 });
 
