@@ -13,6 +13,7 @@ export default [
     route("cart", "routes/cart.tsx"),
     route("checkout", "routes/checkout.tsx"),
     route("orders/:orderNumber", "routes/order.tsx"),
+    route("orders/:orderNumber/pickup", "routes/pickup.tsx"),
     route("account/orders", "routes/account/orders.tsx"),
     route("account/favorites", "routes/account/favorites.tsx"),
     route("login", "routes/auth/login.tsx"),
@@ -26,6 +27,7 @@ export default [
   route("admin", "routes/admin/_layout.tsx", [
     index("routes/admin/index.tsx"),
     route("orders", "routes/admin/orders.tsx"),
+    route("pickup", "routes/admin/pickup.tsx"),
     route("products", "routes/admin/products.tsx"),
     route("products/:productId", "routes/admin/product-edit.tsx"),
     route("categories", "routes/admin/categories.tsx"),

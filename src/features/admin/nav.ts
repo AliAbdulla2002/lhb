@@ -1,5 +1,6 @@
 import {
   BadgePercent,
+  CarFront,
   BarChart3,
   ClipboardList,
   FolderTree,
@@ -19,6 +20,7 @@ import type { AppRole } from "~/features/auth/AuthProvider";
 export const ADMIN_NAV: { to: string; key: string; icon: LucideIcon; min: AppRole; end?: boolean }[] = [
   { to: "/admin", key: "overview", icon: LayoutDashboard, min: "staff", end: true },
   { to: "/admin/orders", key: "orders", icon: ClipboardList, min: "staff" },
+  { to: "/admin/pickup", key: "pickup", icon: CarFront, min: "staff" },
   { to: "/admin/products", key: "products", icon: UtensilsCrossed, min: "manager" },
   { to: "/admin/categories", key: "categories", icon: FolderTree, min: "manager" },
   { to: "/admin/promotions", key: "promotions", icon: BadgePercent, min: "manager" },

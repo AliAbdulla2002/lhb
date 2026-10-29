@@ -386,9 +386,14 @@ All of the DB and most E2E tests depend on decision **D3** (local Supabase via D
 - [x] Online payment documented, not activated — see docs/PAYMENTS.md
 - [ ] Guest checkout (deferred by decision D4)
 
-**Phase 6 — Pickup & Digital Horn**
-- [ ] Vehicle capture, pickup screen, `notify-arrival`, staff queue, ack/handover, realtime + recovery
-- [ ] Mobile testing: retries, offline, duplicate taps
+**Phase 6 — Pickup & Digital Horn** (2026-10-29)
+- [x] `public.notify_arrival` bound to the signed-in customer; queue view with branch names; DB tests
+- [x] Customer pickup screen: order number, plate, colour, branch and instructions, live status, large "I'm here" horn button
+- [x] Horn: ripple/glow, vibration, optional quiet chime (off by default, mute toggle), screen kept awake where supported, no location needed
+- [x] Duplicate protection: synchronous tap guard + one request id per press reused on network retry; server cooldown shown as a countdown; 5-per-order cap
+- [x] Staff pickup queue: waiting cars first with live elapsed timer, plate, colour, first name, notify count; acknowledge, advance and hand over; branch filter
+- [x] Missed-alert recovery: queue rebuilt from the database (realtime + 20 s polling + refetch on focus); staff-controlled chime, tab-title badge, optional browser alerts
+- [ ] Push notifications to closed browsers (not required: the persistent queue covers missed alerts)
 
 **Phase 7 — QA & deploy**
 - [ ] Lint, typecheck, build, all tests; secret scan

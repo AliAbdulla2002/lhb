@@ -138,6 +138,13 @@ function OrderView({ order }: { order: CustomerOrder }) {
           </dl>
         </section>
 
+        {order.fulfillment_type === "pickup" && live && (
+          <ButtonLink to={`/orders/${order.order_number}/pickup`} size="lg" className="w-full sm:w-auto">
+            <CarFront className="size-5" aria-hidden />
+            {t("pickup.open")}
+          </ButtonLink>
+        )}
+
         {order.status === "pending" && (
           <ConfirmButton label={t("orders.cancel")} message={t("orders.cancelConfirm")} onConfirm={() => cancel.mutateAsync().then(() => undefined, () => undefined)} />
         )}

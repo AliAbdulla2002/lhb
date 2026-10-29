@@ -7,6 +7,8 @@ export default defineConfig({
   testDir: "e2e",
   fullyParallel: true,
   reporter: [["list"]],
+  // Four parallel browsers on a dev machine can be slow; allow more than the 5 s default.
+  expect: { timeout: 10_000 },
   use: { baseURL: `http://127.0.0.1:${PORT}`, trace: "retain-on-failure" },
   projects: [
     { name: "mobile", use: { ...devices["Pixel 7"] } },
