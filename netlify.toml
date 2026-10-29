@@ -1,0 +1,10 @@
+# Netlify build settings. Public values (VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY,
+# VITE_SITE_URL) are set in the Netlify UI → Site configuration → Environment variables.
+# Never add the service_role key. `npm run build` also writes _redirects (SPA fallback)
+# and _headers (security headers) into build/client; see docs/DEPLOYMENT.md.
+[build]
+  command = "npm run build && npm run scan:secrets"
+  publish = "build/client"
+
+[build.environment]
+  NODE_VERSION = "24"
