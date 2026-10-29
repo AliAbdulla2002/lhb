@@ -9,6 +9,7 @@ import { ProductCard, ProductCardSkeleton, ProductGrid } from "~/features/menu/P
 import { PromotionCard } from "~/features/content/PromotionCard";
 import { BranchCard } from "~/features/content/BranchCard";
 import { ButtonLink } from "~/ui/Button";
+import { Logo } from "~/ui/Brand";
 import { Container } from "~/ui/Container";
 import { BackendNotice, EmptyState, ErrorState } from "~/ui/Feedback";
 
@@ -63,8 +64,8 @@ function Hero() {
         <div aria-hidden className="relative mx-auto hidden aspect-square w-full max-w-md lg:block">
           <div className="absolute inset-0 rounded-full border border-flame-400/20" />
           <div className="absolute inset-8 rounded-full border border-flame-400/30" />
-          <div className="absolute inset-16 grid place-items-center rounded-full bg-[radial-gradient(circle_at_50%_70%,var(--color-ember-500),var(--color-ember-800)_60%,var(--color-char-900))] shadow-[var(--shadow-glow)]">
-            <Flame className="size-32 text-flame-300 motion-safe:animate-flicker" strokeWidth={1.25} />
+          <div className="absolute inset-16 grid place-items-center rounded-full bg-cream-200 shadow-[var(--shadow-glow)]">
+            <Logo className="size-4/5" />
           </div>
           <span className="absolute bottom-6 end-0 font-display text-8xl font-black text-cream-50/10">لهب</span>
         </div>

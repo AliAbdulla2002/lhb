@@ -49,7 +49,7 @@ export function BranchCard({ branch }: { branch: Branch }) {
             );
           })}
         </dl>
-        <p className="mt-3 text-xs text-char-700/70">{t("contact.hoursUnconfirmed")}</p>
+        <p className="mt-3 text-xs text-char-700">{t("contact.hoursUnconfirmed")}</p>
       </div>
 
       <div className="mt-6 flex flex-wrap gap-2">

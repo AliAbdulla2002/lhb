@@ -2,16 +2,20 @@ import { Flame } from "lucide-react";
 import { useLang } from "~/i18n";
 import { cn } from "./cn";
 
-/** Text wordmark used until the official vector logo is supplied (see config/brand.ts). */
+/** Official logo (owner-supplied, 150 px raster) on its cream badge, with the LAHAB SHAWARMA lockup. */
+export function Logo({ className }: { className?: string }) {
+  return <img src="/brand/lahab-logo.webp" alt="" width={150} height={150} className={cn("rounded-full", className)} decoding="async" />;
+}
+
 export function Wordmark({ className, tone = "dark" }: { className?: string; tone?: "dark" | "light" }) {
   return (
-    <span className={cn("inline-flex items-center gap-1.5 font-display font-black leading-none", className)}>
-      <Flame className="size-[1.1em] text-ember-500 motion-safe:animate-flicker" aria-hidden />
-      <span className={tone === "dark" ? "text-char-900" : "text-cream-50"}>لهب</span>
-      {/* Small text: darker red on light backgrounds, lighter flame on dark, for contrast. */}
-      <span className={cn("text-[0.55em] tracking-[0.2em]", tone === "dark" ? "text-ember-700" : "text-flame-400")} dir="ltr">
-        LAHAB
+    <span className={cn("inline-flex items-center gap-2 leading-none", className)}>
+      <Logo className="size-[1.6em] shrink-0" />
+      <span className="flex flex-col font-display" dir="ltr">
+        <span className={cn("text-[0.7em] font-black tracking-[0.06em]", tone === "dark" ? "text-ember-700" : "text-cream-50")}>LAHAB</span>
+        <span className={cn("text-[0.32em] font-bold tracking-[0.3em]", tone === "dark" ? "text-char-800" : "text-flame-400")}>SHAWARMA</span>
       </span>
+      <span className="sr-only">لهب</span>
     </span>
   );
 }

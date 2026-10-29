@@ -27,7 +27,7 @@ function LineRow({ line, issue, serverTotal }: { line: CartLine; issue?: string;
           {name}
         </Link>
         {line.optionLabels.length > 0 && <p className="text-sm text-char-700">{line.optionLabels.map((o) => o[lang]).join(" · ")}</p>}
-        {line.notes && <p className="text-sm italic text-char-700/80">“{line.notes}”</p>}
+        {line.notes && <p className="text-sm italic text-char-700">“{line.notes}”</p>}
         {issue && (
           <p role="alert" className="flex items-start gap-1.5 text-sm font-medium text-ember-700">
             <AlertTriangle className="mt-0.5 size-4 shrink-0" aria-hidden />

@@ -86,7 +86,7 @@ export default function AdminOverview() {
             </Panel>
 
             <Panel title={t("admin.overview.bestSellers")}>
-              <p className="-mt-2 mb-3 text-xs text-char-700/70">{t("admin.overview.bestSellersNote")}</p>
+              <p className="-mt-2 mb-3 text-xs text-char-700">{t("admin.overview.bestSellersNote")}</p>
               {dashboard.data.best_sellers.length === 0 ? (
                 <p className="text-sm text-char-700">{t("admin.common.empty")}</p>
               ) : (

@@ -5,21 +5,25 @@ Everything below needs the restaurant's input. Nothing here was invented. Items 
 
 ## Brand
 
-- [ ] Official logo as a vector file (SVG, AI or PDF). The site currently shows a text wordmark.
-- [ ] Official brand colours and font. The current red, flame and cream are estimated from the Instagram avatar (`src/app.css`).
-- [ ] Food photography: original files, or written permission to use specific Instagram posts. *(admin: product photos)*
+- [x] Logo supplied (150 px). It's used in the header, home page and favicon.
+- [ ] The logo as a vector file (SVG, AI or PDF), for sharp large and print sizes.
+- [x] Brand colours: sampled from the supplied menu artwork (red #E54135, yellow #FABA10, maroon #5A2828, cream #F0E4B2).
+- [ ] Brand font name, if there is one. The menu headings use a display font that I couldn't identify; the site uses Alexandria / Readex Pro.
+- [ ] Food photography: original files. The photos inside the menu images are too small (about 150 px) to reuse. *(admin: product photos)*
 
 ## Menu *(admin)*
 
-- [ ] Categories and items with Arabic and English names and descriptions.
-- [ ] Prices in BHD, sizes, add-ons and sauces with extra prices, and which choices are required.
-- [ ] Best sellers and featured items.
-- [ ] Remove every SAMPLE item before launch (they only exist in the local dev seed).
+- [x] Official menu supplied and transcribed: 10 categories, 25 items, Arabic text and prices as printed (`supabase/menu/official-menu-2026-10.sql`).
+- [ ] Review the **English** names and descriptions. They are my draft translations (e.g. «سقنشر» → "Signature", «بطاطس عمان» → "Oman chips").
+- [ ] Check the Arabic transcription against the menu (spelling as printed, e.g. «داينمايت» in one title and «دايناميت» in the descriptions).
+- [ ] Confirm the item order, featured items (provisionally: shawarma burger, shawarma plate, Arabic box, Lahab salad) and best sellers (none set).
+- [ ] Any sizes or paid extras not shown on the printed menu.
 
 ## Branch & hours *(admin)*
 
 - [ ] Confirm the branch list (only A'ali is verified).
 - [ ] Confirm opening hours per weekday. The sources disagree: 5 pm–12 am (Instagram bio, Google) vs 12 pm–12 am (an older Instagram post).
+- [x] Phone 17232805 and WhatsApp 33447433 (from the menu).
 - [ ] The Google Maps link for the branch, and the pickup parking instructions in Arabic and English.
 - [ ] Preparation lead time and orders per 15-minute slot.
 - [ ] Holiday closures (e.g. Eid).

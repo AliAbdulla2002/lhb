@@ -81,7 +81,7 @@ export default function AdminStaff() {
             {t("admin.staff.grant")}
           </Button>
         </form>
-        <p className="mt-3 text-xs text-char-700/70">{t("admin.staff.staffNeedsBranch")}</p>
+        <p className="mt-3 text-xs text-char-700">{t("admin.staff.staffNeedsBranch")}</p>
       </Panel>
 
       {staff.isError ? (

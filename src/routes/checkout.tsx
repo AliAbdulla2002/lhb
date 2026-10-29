@@ -300,7 +300,7 @@ function CheckoutForm() {
                 />
                 <fieldset>
                   <legend className="mb-2 text-sm font-medium">
-                    {t("checkout.color")} <span className="text-char-700/70">({t("common.optional")})</span>
+                    {t("checkout.color")} <span className="text-char-700">({t("common.optional")})</span>
                   </legend>
                   <div className="flex flex-wrap gap-2">
                     {VEHICLE_COLORS.map((c) => (
@@ -330,7 +330,7 @@ function CheckoutForm() {
               <span className="block font-semibold">{t("checkout.cash")}</span>
               <span className="block text-sm text-char-700">{t("checkout.cashHint")}</span>
             </ChoiceCard>
-            <p className="text-sm text-char-700/80">{t("checkout.onlineSoon")}</p>
+            <p className="text-sm text-char-700">{t("checkout.onlineSoon")}</p>
           </Section>
 
           {!hasPhone && (
@@ -434,7 +434,7 @@ function CheckoutForm() {
           <Button type="submit" size="lg" className="w-full" loading={submit.isPending} disabled={!canSubmit || submit.isPending}>
             {submit.isPending ? t("checkout.placing") : t("checkout.placeOrder", { total: formatBHD(total, lang) })}
           </Button>
-          <p className="text-center text-xs text-char-700/70">{t("checkout.serverPrices")}</p>
+          <p className="text-center text-xs text-char-700">{t("checkout.serverPrices")}</p>
         </aside>
       </Container>
     </form>

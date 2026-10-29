@@ -89,7 +89,7 @@ function BusinessSettings({ initial, editable }: { initial: Settings; editable: 
   return (
     <form onSubmit={save} className="space-y-5">
       <Panel title={t("admin.settings.business")}>
-        {!editable && <p className="-mt-2 mb-4 text-xs text-char-700/70">{t("admin.settings.superAdminOnly")}</p>}
+        {!editable && <p className="-mt-2 mb-4 text-xs text-char-700">{t("admin.settings.superAdminOnly")}</p>}
         <div className="grid gap-4 sm:grid-cols-2">
           <InputField label={t("admin.settings.displayNameAr")} {...text("display_name_ar", "rtl")} />
           <InputField label={t("admin.settings.displayNameEn")} {...text("display_name_en")} />
@@ -209,7 +209,7 @@ export default function AdminSettings() {
       )}
 
       <Panel title={t("admin.settings.content")}>
-        <p className="-mt-2 mb-4 text-xs text-char-700/70">{t("admin.settings.contentHint")}</p>
+        <p className="-mt-2 mb-4 text-xs text-char-700">{t("admin.settings.contentHint")}</p>
         {content.isError ? (
           <ErrorState onRetry={() => content.refetch()} />
         ) : content.isPending ? (

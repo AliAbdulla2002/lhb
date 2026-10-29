@@ -12,7 +12,8 @@ Customer website, ordering and car-pickup system for Lahab restaurant, A'ali, Ba
 ```
 src/                 app (routes/, features/, ui/, lib/, i18n/, config/)
 supabase/migrations  schema, business logic, RLS — the source of truth
-supabase/seed.sql    LOCAL DEV ONLY sample data (clearly labelled SAMPLE)
+supabase/seed.sql    LOCAL DEV ONLY branch, settings and placeholder content
+supabase/menu        official menu (transcribed 2026-10-29) — loaded by db reset; run once in production
 supabase/scripts     provision-super-admin.sql
 tests/db             migrations + RLS + business-logic tests (PGlite, no Docker)
 tests/unit           Vitest + Testing Library

@@ -38,7 +38,7 @@ then repeat for production.
    - Edit the confirmation and reset email templates; Arabic and English text is recommended.
 7. **First super admin**: sign up on the site, confirm the email, then run
    `supabase/scripts/provision-super-admin.sql` in the SQL editor (replace `:'email'`).
-8. Enter the real menu, hours, branch Maps link and settings through `/admin`, then switch
+8. Load the official menu: after review, run `supabase/menu/official-menu-2026-10.sql` in the SQL editor (it is idempotent). Then enter hours, the branch Maps link and settings through `/admin`, then switch
    on **Accept online orders** and **Cash on pickup** in `/admin/settings` when ready.
 
 ## 2. Static site

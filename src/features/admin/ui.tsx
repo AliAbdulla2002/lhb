@@ -35,7 +35,7 @@ export function Stat({ label, value, hint, tone = "default" }: { label: string; 
     <div className={cn("rounded-2xl border p-4", tone === "alert" ? "border-flame-400 bg-flame-300/15" : "border-char-900/10 bg-white")}>
       <p className="text-sm text-char-700">{label}</p>
       <p className="mt-1 text-3xl font-black tabular-nums">{value}</p>
-      {hint && <p className="mt-1 text-xs text-char-700/70">{hint}</p>}
+      {hint && <p className="mt-1 text-xs text-char-700">{hint}</p>}
     </div>
   );
 }
@@ -110,7 +110,7 @@ export function Toggle({
       </button>
       <span>
         <span className="block text-sm font-medium">{label}</span>
-        {hint && <span className="block text-xs text-char-700/70">{hint}</span>}
+        {hint && <span className="block text-xs text-char-700">{hint}</span>}
       </span>
     </label>
   );

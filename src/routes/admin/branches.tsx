@@ -156,7 +156,7 @@ function Identity({ branch, editable }: { branch: Branch | null; editable: boole
 
   return (
     <Panel title={t("admin.branches.identity")}>
-      {!editable && <p className="-mt-2 mb-4 text-xs text-char-700/70">{t("admin.branches.identityHint")}</p>}
+      {!editable && <p className="-mt-2 mb-4 text-xs text-char-700">{t("admin.branches.identityHint")}</p>}
       <form
         className="space-y-4"
         onSubmit={(e) => {

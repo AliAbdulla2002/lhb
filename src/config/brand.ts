@@ -8,13 +8,13 @@
 export const brand = {
   nameAr: "لهب",
   nameEn: "LAHAB",
-  /** Official vector logo not yet supplied — a text wordmark is rendered instead. */
-  logo: { status: "pending-owner" as const, src: null as string | null },
-  /** Colours in src/app.css are provisional until the owner supplies brand values. */
-  colorsStatus: "provisional" as const,
+  /** Owner-supplied logo (150 px raster). A vector file is still needed for print and large sizes. */
+  logo: { status: "raster-supplied" as const, src: "/brand/lahab-logo.webp" },
+  /** Colours in src/app.css are sampled from the owner-supplied menu artwork. */
+  colorsStatus: "sampled-from-official-artwork" as const,
   social: {
     instagram: "https://www.instagram.com/lahab.bh/",
   },
-  /** Photography: none licensed yet. Product cards show a branded placeholder. */
+  /** Photography: the menu images are too small to reuse; original photos are needed. */
   photographyStatus: "pending-owner" as const,
 } as const;

@@ -149,7 +149,7 @@ function ProductForm({ product }: { product: AdminProduct | null }) {
         </div>
         <fieldset className="mt-5">
           <legend className="text-sm font-semibold">{t("admin.products.schedule")}</legend>
-          <p className="text-xs text-char-700/70">{t("admin.products.scheduleHint")}</p>
+          <p className="text-xs text-char-700">{t("admin.products.scheduleHint")}</p>
           <div className="mt-2 grid gap-4 sm:grid-cols-2">
             <InputField label={t("admin.products.availableFrom")} type="time" dir="ltr" {...form.register("available_from")} />
             <InputField label={t("admin.products.availableUntil")} type="time" dir="ltr" error={err(errors.available_until?.message)} {...form.register("available_until")} />
@@ -254,7 +254,7 @@ function OptionEditor({ productId, option, onDone }: { productId: string; option
           onChange={(e) => setDraft({ ...draft, max_select: Math.max(1, Number(e.target.value)) })}
         />
       </div>
-      <p className="text-xs text-char-700/70">{t("admin.products.requiredHint")}</p>
+      <p className="text-xs text-char-700">{t("admin.products.requiredHint")}</p>
 
       <div className="space-y-2">
         <p className="text-sm font-semibold">{t("admin.products.values")}</p>
@@ -403,7 +403,7 @@ function ImagesPanel({ product, onChange }: { product: AdminProduct; onChange: (
         </>
       }
     >
-      <p className="-mt-2 mb-4 text-xs text-char-700/70">{t("admin.products.uploadHint")}</p>
+      <p className="-mt-2 mb-4 text-xs text-char-700">{t("admin.products.uploadHint")}</p>
       {product.product_images.length === 0 ? (
         <p className="text-sm text-char-700">{t("admin.common.empty")}</p>
       ) : (

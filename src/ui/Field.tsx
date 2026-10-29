@@ -23,7 +23,7 @@ export function FieldShell({ label, error, hint, children }: FieldShellProps) {
       </label>
       {children({ id, describedBy })}
       {hint && !error && (
-        <p id={hintId} className="text-xs text-char-700/70">
+        <p id={hintId} className="text-xs text-char-700">
           {hint}
         </p>
       )}

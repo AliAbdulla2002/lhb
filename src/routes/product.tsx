@@ -214,7 +214,7 @@ function ProductView({ product }: { product: ProductDetail }) {
                   {t("product.addToCart", { price: formatBHD(unit * quantity, lang) })}
                 </Button>
               </div>
-              <p className="text-xs text-char-700/70">{t("product.estimateNote")}</p>
+              <p className="text-xs text-char-700">{t("product.estimateNote")}</p>
             </>
           )}
         </div>

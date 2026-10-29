@@ -56,8 +56,8 @@ Date: 2026-10-29 · Branch: `main` · Stack: React 19 + React Router 8 (static, 
 ## Remaining limitations
 
 1. **Not yet run against a real Supabase instance** (Docker wasn't available). See [TESTING.md](TESTING.md#known-gaps--run-before-production). This is the most important next step.
-2. **Brand assets are placeholders:** a text wordmark, estimated colours, flame placeholders instead of photos.
-3. **The menu is sample data.** Hours are unconfirmed and shown with a "being confirmed" note.
+2. **Brand assets:** the official logo (150 px raster) and colours sampled from the menu artwork are in use. Still needed: a vector logo and original food photos; products show a branded placeholder until photos are uploaded.
+3. **The official menu is transcribed** (`supabase/menu/official-menu-2026-10.sql`, tested), but the English translations await owner review. Hours are unconfirmed and shown with a "being confirmed" note.
 4. **Online payment, delivery and guest checkout** are not implemented (designs documented).
 5. **No push notifications to closed browsers.** The persistent staff queue covers missed alerts.
 6. **No self-service account deletion** (manual process documented).

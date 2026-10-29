@@ -54,9 +54,10 @@ export function ProductCard({ product }: { product: Product }) {
       </div>
       <div className="flex flex-1 flex-col gap-1.5 p-4">
         <h3 className="text-lg font-bold leading-snug text-char-900">{name}</h3>
-        {pick(product, "description") && <p className="line-clamp-2 text-sm text-char-700/80">{pick(product, "description")}</p>}
-        <div className="mt-auto pt-2 font-bold text-ember-600">
-          <Price value={product.base_price} />
+        {pick(product, "description") && <p className="line-clamp-2 text-sm text-char-700">{pick(product, "description")}</p>}
+        <div className="mt-auto pt-2">
+          {/* Yellow price tag, as on the printed menu. */}
+          <Price value={product.base_price} className="inline-block rounded-lg bg-flame-400 px-3 py-1 text-sm font-bold text-char-900" />
         </div>
       </div>
     </Link>

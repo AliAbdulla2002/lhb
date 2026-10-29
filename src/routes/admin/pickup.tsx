@@ -257,7 +257,7 @@ export default function AdminPickupQueue() {
             {t("pickupQueue.enableNotifications")}
           </Button>
         )}
-        {permission === "denied" && <span className="text-xs text-char-700/70">{t("pickupQueue.notificationsBlocked")}</span>}
+        {permission === "denied" && <span className="text-xs text-char-700">{t("pickupQueue.notificationsBlocked")}</span>}
       </div>
 
       {queue.isError ? (
