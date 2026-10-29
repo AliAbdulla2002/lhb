@@ -9,7 +9,7 @@ import { ProductCard, ProductCardSkeleton, ProductGrid } from "~/features/menu/P
 import { PromotionCard } from "~/features/content/PromotionCard";
 import { BranchCard } from "~/features/content/BranchCard";
 import { ButtonLink } from "~/ui/Button";
-import { Logo } from "~/ui/Brand";
+import { HeroEmblem } from "~/features/content/HeroEmblem";
 import { Container } from "~/ui/Container";
 import { BackendNotice, EmptyState, ErrorState } from "~/ui/Feedback";
 
@@ -40,7 +40,7 @@ function Hero() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_60%,var(--color-char-950))]" />
       </div>
 
-      <Container className="grid min-h-[78svh] items-center gap-10 py-16 lg:grid-cols-[1.2fr_1fr]">
+      <Container className="grid min-h-[78svh] grid-cols-1 items-center gap-8 py-12 sm:py-16 lg:gap-10 lg:grid-cols-[1.2fr_1fr]">
         <div className="space-y-7 motion-safe:animate-fade-up">
           <p className="inline-flex items-center gap-2 rounded-full border border-cream-50/15 bg-cream-50/5 px-4 py-1.5 text-sm text-flame-300">
             <MapPin className="size-4" aria-hidden />
@@ -61,13 +61,10 @@ function Hero() {
           </div>
         </div>
 
-        <div aria-hidden className="relative mx-auto hidden aspect-square w-full max-w-md lg:block">
-          <div className="absolute inset-0 rounded-full border border-flame-400/20" />
-          <div className="absolute inset-8 rounded-full border border-flame-400/30" />
-          <div className="absolute inset-16 grid place-items-center rounded-full bg-cream-200 shadow-[var(--shadow-glow)]">
-            <Logo className="size-4/5" />
-          </div>
-          <span className="absolute bottom-6 end-0 font-display text-8xl font-black text-cream-50/10">لهب</span>
+        {/* On phones the emblem sits above the headline; on wide screens beside it. */}
+        <div className="relative -order-1 lg:order-none">
+          <HeroEmblem />
+          <span aria-hidden className="pointer-events-none absolute bottom-0 end-0 font-display text-6xl font-black text-cream-50/10 lg:bottom-6 lg:text-8xl">لهب</span>
         </div>
       </Container>
     </section>

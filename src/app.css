@@ -39,6 +39,26 @@
 
   --animate-flicker: flicker 3.2s ease-in-out infinite;
   --animate-fade-up: fade-up 0.5s ease-out both;
+  --animate-spin-slow: spin 24s linear infinite;
+  --animate-ring-pulse: ring-pulse 3.2s ease-in-out infinite;
+  --animate-flare: flare 0.6s cubic-bezier(0.3, 1.6, 0.5, 1);
+  --animate-ember-burst: ember-burst 0.9s ease-out forwards;
+
+  @keyframes ring-pulse {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.04); opacity: 1; }
+  }
+  @keyframes flare {
+    0% { transform: scale(1); }
+    35% { transform: scale(1.12); box-shadow: 0 0 0 2px rgb(246 134 26 / 0.6), 0 0 90px 0 rgb(246 134 26 / 0.9); }
+    100% { transform: scale(1); }
+  }
+  /* Each ember flies outward along its own angle (--a) to a distance (--d, a share of the
+     emblem's width, which is the container) set inline. */
+  @keyframes ember-burst {
+    from { transform: translate(-50%, -50%) rotate(var(--a)) translateY(0) scale(1); opacity: 1; }
+    to { transform: translate(-50%, -50%) rotate(var(--a)) translateY(calc(var(--d) * -100cqw)) scale(0.2); opacity: 0; }
+  }
 
   @keyframes flicker {
     0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
