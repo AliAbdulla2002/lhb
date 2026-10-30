@@ -9,7 +9,9 @@
 export const business = {
   name: "LAHAB | لهب",
   alternateName: ["Lahab", "لهب", "مطعم لهب"],
-  servesCuisine: ["Shawarma"],
+  description:
+    "مطعم شاورما في عالي، البحرين. اطلب أونلاين واستلم طلبك من سيارتك. Shawarma restaurant in A'ali, Bahrain: order online and collect from your car.",
+  servesCuisine: ["Shawarma", "Middle Eastern", "Fast food"],
   telephone: ["+97333447433", "+97317232805"],
   address: {
     streetAddress: "Building 2542, Road 4270",

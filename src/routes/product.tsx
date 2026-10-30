@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router";
 import { ArrowLeft, ArrowRight, Check, Minus, Plus } from "lucide-react";
 import { seo } from "~/lib/seo";
+import { siteUrl } from "~/config/env";
+import { mediaUrl } from "~/lib/supabase";
 import type { Route } from "./+types/product";
 import { useLang } from "~/i18n";
 import { env } from "~/config/env";
@@ -9,7 +11,7 @@ import { useProduct } from "~/lib/api/queries";
 import type { ProductDetail, ProductOption } from "~/lib/api/types";
 import { cart, MAX_QUANTITY } from "~/features/cart/store";
 import { initialSelections, invalidOptions, selectedLabels, toggleValue, unitEstimate, type Selections } from "~/features/menu/customize";
-import { ProductImage } from "~/features/menu/ProductCard";
+import { primaryImage, ProductImage } from "~/features/menu/ProductCard";
 import { FavoriteButton } from "~/features/favorites/favorites";
 import { Button, ButtonLink } from "~/ui/Button";
 import { Container } from "~/ui/Container";
@@ -20,7 +22,40 @@ import { useToast } from "~/ui/Toast";
 import { formatBHD } from "~/lib/money";
 import { cn } from "~/ui/cn";
 
-export const meta: Route.MetaFunction = ({ params }) => seo({ title: "لهب | LAHAB", path: `/menu/item/${params.productSlug}` });
+// Title, description and share image depend on the product, so ProductSeo renders them
+// once it has loaded; the route only sets what is known from the URL.
+export const meta: Route.MetaFunction = ({ params }) =>
+  seo({ title: "", path: `/menu/item/${params.productSlug}` }).filter(
+    (t) => !("title" in t) && !/^(og|twitter):(title|description|image)/.test(String("property" in t ? t.property : "name" in t ? t.name : "")),
+  );
+
+/**
+ * Product-specific title, description and share photo (React hoists these into <head>).
+ * The build also writes them into each product's HTML for crawlers that don't run
+ * JavaScript (scripts/postbuild.mjs); those copies are removed here to avoid duplicates.
+ */
+function ProductSeo({ product }: { product: ProductDetail }) {
+  useEffect(() => {
+    for (const el of document.head.querySelectorAll("[data-prerender-seo]")) el.remove();
+  }, []);
+  const title = `${product.name_ar} | ${product.name_en} — لهب LAHAB`;
+  const price = `${product.base_price.toFixed(3)} د.ب.`;
+  const description = [product.description_ar, `السعر ${price}`, product.description_en].filter(Boolean).join(" · ");
+  const image = mediaUrl(primaryImage(product)?.storage_path) ?? new URL("/og-image.jpg", siteUrl).toString();
+  return (
+    <>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={image} />
+      <meta property="og:image:alt" content={product.name_ar} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={image} />
+    </>
+  );
+}
 
 function OptionGroup({
   option,
@@ -109,10 +144,6 @@ function ProductView({ product }: { product: ProductDetail }) {
   const unit = useMemo(() => unitEstimate(product, selections), [product, selections]);
   const name = pick(product, "name");
   const Back = lang === "ar" ? ArrowRight : ArrowLeft;
-
-  useEffect(() => {
-    document.title = `${name} — لهب LAHAB`;
-  }, [name]);
 
   const add = () => {
     if (invalid.length > 0) {
@@ -247,5 +278,10 @@ export default function ProductPage() {
         <EmptyState title={t("product.notFound")} action={<ButtonLink to="/menu" variant="secondary">{t("product.backToMenu")}</ButtonLink>} />
       </Container>
     );
-  return <ProductView key={product.data.id} product={product.data} />;
+  return (
+    <>
+      <ProductSeo product={product.data} />
+      <ProductView key={product.data.id} product={product.data} />
+    </>
+  );
 }

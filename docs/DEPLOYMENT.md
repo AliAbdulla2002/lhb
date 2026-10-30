@@ -106,7 +106,21 @@ If a migration causes problems:
 
 Keep site and database compatible across one release: deploy additive database changes first, then the site that uses them. Remove old columns only in a later release.
 
-## 5. Ongoing
+## 5. Search engines, AI search and link previews
+
+The build reads the public menu (anon key) and writes, into `build/client`:
+
+- one prerendered HTML page per category and product, with the product's title, description, price, photo and schema.org `MenuItem` data in the HTML itself;
+- schema.org `Menu` data on `/menu`, and `Restaurant` + `WebSite` data on the home page;
+- `sitemap.xml` (with product photos and last-modified dates) and `llms.txt` (a plain summary of the restaurant and its menu for AI assistants).
+
+Link previews (WhatsApp, Instagram, X) use `public/og-image.jpg` (1200×630, made with `npm run og` in `marketing-video/`). Product links use the product photo, converted to JPEG by Netlify's image CDN (`[images]` in `netlify.toml`).
+
+**Menu changes need a rebuild** to reach these files. The site itself always shows the live menu. Trigger a deploy in Netlify after changing the menu, or add a Netlify build hook and call it from a Supabase database webhook on `products`.
+
+After a domain change: update `VITE_SITE_URL` in Netlify, redeploy, and resubmit the sitemap in Google Search Console.
+
+## 6. Ongoing
 
 - Retention runs hourly (`app.purge_expired_data`). See [DATA_RETENTION.md](DATA_RETENTION.md).
 - Update dependencies monthly (`npm outdated`), then run all tests before deploying.

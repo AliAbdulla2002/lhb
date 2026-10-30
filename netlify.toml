@@ -8,3 +8,8 @@
 
 [build.environment]
   NODE_VERSION = "24"
+
+# Product link previews use Netlify's image CDN to turn menu photos (WebP in Supabase
+# Storage) into JPEG; see scripts/postbuild.mjs.
+[images]
+  remote_images = ['https://gtcsfjwknyabbcyjbmcr\.supabase\.co/storage/v1/object/public/menu-media/.*']

@@ -9,7 +9,8 @@
     "music": "python scripts/music.py",
     "voice": "python scripts/vo-normalize.py",
     "render": "remotion render src/index.ts LahabReel out/lahab-reel.mp4 --codec=h264 --crf=18 --audio-codec=aac && python scripts/master.py",
-    "still": "remotion still src/index.ts LahabReel"
+    "still": "remotion still src/index.ts LahabReel",
+    "og": "remotion still src/index.ts OgImage ../public/og-image.jpg --image-format=jpeg --jpeg-quality=88"
   },
   "dependencies": {
     "@remotion/cli": "^4.0.539",
