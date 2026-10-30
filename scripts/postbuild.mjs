@@ -3,7 +3,7 @@
 //   sitemap.xml, robots.txt, _redirects (SPA fallback) and _headers (security headers).
 // _redirects/_headers use the Netlify / Cloudflare Pages format; see docs/DEPLOYMENT.md
 // for Vercel and other hosts. Reads VITE_* values from the environment or .env.
-import { existsSync, readFileSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const out = "build/client";
@@ -131,6 +131,25 @@ if (sections.length) {
   }
 }
 
+// ---- clean URLs ------------------------------------------------------------------
+// Prerendering writes /menu as menu/index.html, which Netlify answers with a redirect to
+// /menu/. Canonical URLs and links have no trailing slash, so serve each page as
+// menu.html too: Netlify then answers /menu directly.
+let cleanCopies = 0;
+const copyPages = (dir) => {
+  for (const name of readdirSync(join(out, dir), { withFileTypes: true })) {
+    if (!name.isDirectory() || name.name === "assets") continue;
+    const rel = join(dir, name.name);
+    const index = join(out, rel, "index.html");
+    if (existsSync(index)) {
+      copyFileSync(index, join(out, `${rel}.html`));
+      cleanCopies++;
+    }
+    copyPages(rel);
+  }
+};
+copyPages("");
+
 // ---- sitemap -------------------------------------------------------------------
 // Arabic and English share URLs (language is a client preference), so no hreflang.
 const urlEntry = (loc, extra = "") => `  <url><loc>${loc}</loc>${extra}</url>`;
@@ -237,4 +256,4 @@ writeFileSync(
 `,
 );
 
-console.log(`postbuild: ${productPages} product pages, sitemap (${staticPaths.length + sections.length + products.length} urls), llms.txt, robots.txt, _redirects, _headers for ${site}`);
+console.log(`postbuild: ${productPages} product pages, ${cleanCopies} clean-URL copies, sitemap (${staticPaths.length + sections.length + products.length} urls), llms.txt, robots.txt, _redirects, _headers for ${site}`);
