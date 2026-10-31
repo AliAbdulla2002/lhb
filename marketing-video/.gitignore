@@ -1,3 +1,4 @@
 node_modules
 out
 voice-samples
+voice/*.wav

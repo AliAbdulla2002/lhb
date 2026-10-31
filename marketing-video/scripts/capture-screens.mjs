@@ -51,8 +51,43 @@ const order = (arrival) => ({
   ],
 });
 
-async function page(browser, { roles = ["customer"], signedIn = true, arrival = "not_arrived", withCart = false } = {}) {
-  const ctx = await browser.newContext({ ...devices["iPhone 13"], locale: "ar-BH" });
+// Demo data for the owner screens (dashboard, orders board, reports). These numbers are
+// illustrative only; the video labels these screens as a demo.
+const ago = (min) => new Date(Date.now() - min * 60_000).toISOString();
+const demoOrders = [
+  ["0018", "pending", "Ahmed", "11223", "white", "not_arrived", 4.2, 2],
+  ["0017", "preparing", "Fatima", "40871", "black", "not_arrived", 3.6, 6],
+  ["0016", "ready", "Sara", "56789", "red", "arrived", 3.0, 11],
+  ["0015", "confirmed", "Yousif", "90210", "silver", "not_arrived", 5.5, 14],
+  ["0014", "completed", "Mariam", "33012", "blue", "handed_over", 2.8, 31],
+].map(([n, status, name, plate, color, arrival, total, min], i) => ({
+  id: `demo-${i}`, order_number: `LH-261031-${n}`, status, branch_id: "b", fulfillment_type: "pickup", payment_method: "cash_on_pickup",
+  payment_status: status === "completed" ? "paid" : "unpaid", requested_pickup_at: null, subtotal: total, options_total: 0, discount_total: 0, total,
+  coupon_code: null, customer_name: name, customer_phone: "+973 3300 0000", notes: null, cancel_reason: null, created_at: ago(min),
+  branches: { name_ar: "عالي", name_en: "A'ali" },
+  pickup_details: { vehicle_plate: plate, vehicle_color: color, arrival_status: arrival, arrived_at: arrival === "arrived" ? ago(1) : null, notify_count: arrival === "arrived" ? 1 : 0 },
+  order_items: [{ id: `it-${i}`, product_name_ar: "صحن شاورما دجاج", product_name_en: "Chicken shawarma plate", quantity: 1, line_total: total, notes: null, order_item_options: [] }],
+  order_status_history: [],
+}));
+const demoDashboard = {
+  orders_today: 42, by_status: { pending: 3, confirmed: 2, preparing: 4, ready: 2, completed: 29, cancelled: 2 }, sales_today: 128.4,
+  open_value: 41.7, active_orders: 11, waiting_pickup: 2, inventory_tracking: false,
+  best_sellers: [
+    { product_id: null, name_ar: "صحن شاورما دجاج", name_en: "Chicken shawarma plate", quantity: 18 },
+    { product_id: null, name_ar: "بكس شاورما عربي دجاج", name_en: "Arabic chicken shawarma box", quantity: 14 },
+    { product_id: null, name_ar: "برجر شاورما دجاج", name_en: "Chicken shawarma burger", quantity: 11 },
+    { product_id: null, name_ar: "بطاطس تشيزي", name_en: "Cheesy fries", quantity: 9 },
+  ],
+};
+const day = (d) => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Bahrain" }).format(Date.now() - d * 86_400_000);
+const demoReport = {
+  totals: { orders: 268, completed: 251, cancelled: 9, revenue: 842.6, discounts: 18.4 },
+  daily: [31, 35, 29, 40, 44, 47, 42].map((o, i) => ({ day: day(6 - i), orders: o, revenue: Math.round(o * 3.14 * 10) / 10 })),
+  top_products: demoDashboard.best_sellers.map((b, i) => ({ ...b, quantity: [96, 74, 58, 41][i], revenue: [288, 207.2, 98.6, 73.8][i] })),
+};
+
+async function page(browser, { roles = ["customer"], signedIn = true, arrival = "not_arrived", withCart = false, desktop = false } = {}) {
+  const ctx = await browser.newContext(desktop ? { viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1.5, locale: "ar-BH" } : { ...devices["iPhone 13"], locale: "ar-BH" });
   const p = await ctx.newPage();
   await p.addInitScript(([key, s, c, signed]) => {
     if (signed) localStorage.setItem(key, s);
@@ -61,6 +96,7 @@ async function page(browser, { roles = ["customer"], signedIn = true, arrival = 
   // Keep the host's "Powered by Netlify" badge and pop-up out of the captures.
   await p.route("**/.netlify/scripts/**", (route) => route.abort());
   let state = arrival;
+  const admin = roles.includes("manager");
   await p.route(`${API}/**`, async (route) => {
     const req = route.request();
     const path = new URL(req.url()).pathname.replace("/rest/v1/", "");
@@ -74,7 +110,11 @@ async function page(browser, { roles = ["customer"], signedIn = true, arrival = 
       const base = Math.ceil(Date.now() / 900_000) * 900_000 + 900_000;
       return json([0, 1, 2, 3, 4, 5].map((i) => ({ slot_start: new Date(base + i * 900_000).toISOString(), available: i !== 2 })));
     }
+    if (path === "orders" && admin) return route.fulfill({ status: 200, contentType: "application/json", body: JSON.stringify(demoOrders), headers: { "access-control-allow-origin": "*", "access-control-expose-headers": "content-range", "content-range": `0-${demoOrders.length - 1}/${demoOrders.length}` } });
     if (path === "orders") return json(order(state));
+    if (admin && path === "branches") return json([{ id: "b", slug: "aali", name_ar: "عالي", name_en: "A'ali" }]);
+    if (path === "rpc/admin_dashboard") return json(demoDashboard);
+    if (path === "rpc/admin_sales_report") return json(demoReport);
     if (path === "rpc/notify_arrival") {
       state = "arrived";
       return json({ order_id: "o-video", arrival_status: "arrived", arrived_at: new Date().toISOString(), notify_count: 1, replayed: false });
@@ -160,6 +200,26 @@ await p.goto(`${SITE}/admin/pickup`);
 await settle(p);
 await dropText(p, ["جارٍ إعادة الاتصال", "تنبيهات المتصفح محظورة"]);
 await p.screenshot({ path: new URL("staff-queue.png", OUT).pathname.slice(1) });
+await p.context().close();
+
+p = await page(browser, { roles: ["customer", "staff", "manager", "super_admin"] });
+for (const [path, file] of [["/admin", "admin-dashboard"], ["/admin/orders", "admin-orders"], ["/admin/reports", "admin-reports"]]) {
+  await p.goto(`${SITE}${path}`);
+  await settle(p);
+  await dropText(p, ["جارٍ إعادة الاتصال", "تنبيهات المتصفح محظورة"]);
+  await p.screenshot({ path: new URL(`${file}.png`, OUT).pathname.slice(1) });
+  await p.screenshot({ path: new URL(`${file}-full.png`, OUT).pathname.slice(1), fullPage: true });
+}
+await p.context().close();
+
+// The same owner screens on a laptop.
+p = await page(browser, { roles: ["customer", "staff", "manager", "super_admin"], desktop: true });
+for (const [path, file] of [["/admin", "desk-dashboard"], ["/admin/orders", "desk-orders"], ["/admin/pickup", "desk-pickup"], ["/admin/reports", "desk-reports"], ["/admin/products", "desk-products"]]) {
+  await p.goto(`${SITE}${path}`);
+  await settle(p);
+  await dropText(p, ["جارٍ إعادة الاتصال", "تنبيهات المتصفح محظورة"]);
+  await p.screenshot({ path: new URL(`${file}.png`, OUT).pathname.slice(1) });
+}
 await p.context().close();
 
 await browser.close();

@@ -6,9 +6,9 @@ import numpy as np
 
 root = os.path.join(os.path.dirname(__file__), "..")
 tl = json.load(open(os.path.join(root, "src", "timeline.json")))
-fps, scenes = tl["fps"], tl["scenes"]
-starts = np.cumsum([0] + scenes[:-1]) / fps
-total = sum(scenes) / fps
+fps = tl["fps"]
+starts = np.array(tl["cuts"]) / fps
+total = tl["total"] / fps
 SR = 44100
 n = int(total * SR) + SR
 out = np.zeros((n, 2))
@@ -66,7 +66,7 @@ def hit():
     f = 55 + 80 * np.exp(-t / 0.05)
     return np.tanh(2.5 * np.sin(2 * np.pi * np.cumsum(f) / SR)) * e
 
-bpm = 100
+bpm = 112
 eighth = 60 / bpm / 2
 # Maqsum: D T . T D . T .
 pattern = ["D", "T", None, "T", "D", None, "T", None]
@@ -102,9 +102,9 @@ add(drone, 0, 0.07)
 
 for s in starts[1:]:
     add(whoosh(), s - 0.3, 0.18)
-horn_scene, horn_frame = tl["hornAt"]
-add(horn(), starts[horn_scene] + horn_frame / fps, 0.12)
-add(horn(), starts[horn_scene] + horn_frame / fps + 0.28, 0.12)
+horn_at = tl["horn"] / fps
+add(horn(), horn_at, 0.12)
+add(horn(), horn_at + 0.28, 0.12)
 add(hit(), starts[-1] + 0.1, 0.5)
 
 # Fade out and normalise to a -3 dBFS peak; the video lowers it under the voice.
