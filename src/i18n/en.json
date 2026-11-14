@@ -43,7 +43,11 @@
     "heroCta": "Order now",
     "heroSecondary": "Explore the menu",
     "emblem": "The Lahab flame, tap it",
-    "steps": { "order": "Order online", "time": "Pick your time", "car": "Collect from your car" },
+    "steps": {
+      "order": "Order online",
+      "time": "Pick your time",
+      "car": "Collect from your car"
+    },
     "featuredTitle": "Fan favourites",
     "featuredSubtitle": "Hand-picked from the Lahab kitchen.",
     "offersTitle": "Current offers",
@@ -223,7 +227,8 @@
       "customers": "Customers",
       "reports": "Reports",
       "audit": "Audit log",
-      "pickup": "Pickup queue"
+      "pickup": "Pickup queue",
+      "giveaways": "Prize draws"
     },
     "common": {
       "search": "Search",
@@ -515,6 +520,62 @@
       "changes": "Changed fields",
       "none": "No entries.",
       "system": "System"
+    },
+    "giveaways": {
+      "title": "Prize draws",
+      "intro": "Draw winners from customers' invoices or from Instagram. Draws are fair and recorded: each one has a stored random seed you can use to check it.",
+      "fromOrders": "From invoices",
+      "fromInstagram": "From Instagram",
+      "name": "Draw name",
+      "namePlaceholder": "e.g. End-of-month draw",
+      "from": "From",
+      "to": "To",
+      "minTotal": "Minimum invoice (BHD)",
+      "perCustomer": "One chance per customer",
+      "perCustomerHint": "Turned off, every completed invoice is a chance (customers who order more have better odds).",
+      "winners": "Winners",
+      "alternates": "Alternates",
+      "alternatesHint": "If a winner doesn't respond, the first alternate takes the prize.",
+      "eligible": "Entries",
+      "eligibleNote": "Completed orders only.",
+      "draw": "Start the draw",
+      "drawing": "Drawing…",
+      "source": "Source",
+      "sources": {
+        "instagram_comments": "Post comments",
+        "instagram_followers": "Followers",
+        "list": "List of names",
+        "orders": "Invoices"
+      },
+      "pasteComments": "Paste the comments here",
+      "pasteCommentsHint": "Open the post on instagram.com on a computer, load all comments, select and copy them, then paste. Or paste a spreadsheet with a username column and a comment column.",
+      "pasteList": "Paste the account names",
+      "pasteListHint": "One account per line (for example from a followers export). Instagram doesn't share follower lists with apps, so they have to be copied.",
+      "minMentions": "Friends they must tag",
+      "exclude": "Exclude these accounts",
+      "excludeHint": "The restaurant's and staff accounts, separated by commas.",
+      "found": "{{count}} entries",
+      "excludedCount": "{{count}} excluded",
+      "excludedMentions": "too few tags",
+      "excludedListed": "excluded",
+      "mentionsShort": "{{count}} tags",
+      "history": "Past draws",
+      "noHistory": "No draws yet.",
+      "entries": "{{count}} entries",
+      "winner": "Winner",
+      "winnerN": "Winner {{n}}",
+      "alternate": "Alternate {{n}}",
+      "next": "Next winner",
+      "done": "All done 🎉",
+      "show": "Show",
+      "showAgain": "Show full screen",
+      "seed": "Draw seed",
+      "verify": "Check: each entry's rank = sha256(seed + \":\" + its name); the lowest wins. The list and seed are stored.",
+      "copy": "Copy result",
+      "copied": "Copied",
+      "close": "Close",
+      "contact": "Phone",
+      "openOrder": "Open order"
     }
   },
   "status": {
@@ -556,7 +617,8 @@
     "not_allowed": "You don't have permission to change this.",
     "duplicate": "That already exists (slug or code must be unique).",
     "in_use": "This is still used elsewhere and can't be deleted. Archive it instead.",
-    "generic": "Something went wrong. Please try again."
+    "generic": "Something went wrong. Please try again.",
+    "not_enough_entries": "There are fewer entries than winners."
   },
   "vehicleColor": {
     "white": "White",

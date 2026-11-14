@@ -205,9 +205,10 @@ export default function AdminOrders() {
   const branches = useAdminBranches();
   const [filters, setFilters] = useState<OrderFilters>({
     branch: "",
-    status: params.get("status") ?? "active",
-    range: "today",
-    search: "",
+    status: params.get("status") ?? (params.get("search") ? "" : "active"),
+    // A link with ?search= (e.g. from a prize draw) looks the order up across all dates.
+    range: params.get("search") ? "all" : "today",
+    search: params.get("search") ?? "",
     page: 0,
   });
   const [selectedId, setSelectedId] = useState<string | null>(null);

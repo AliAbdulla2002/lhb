@@ -38,6 +38,7 @@ export default [
     route("staff", "routes/admin/staff.tsx"),
     route("customers", "routes/admin/customers.tsx"),
     route("reports", "routes/admin/reports.tsx"),
+    route("giveaways", "routes/admin/giveaways.tsx"),
     route("audit", "routes/admin/audit.tsx"),
   ]),
 ] satisfies RouteConfig;

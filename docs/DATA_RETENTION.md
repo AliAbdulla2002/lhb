@@ -9,6 +9,7 @@ They are implemented in `app.purge_expired_data()`, which runs hourly through `p
 | Pickup arrival events | 90 days | deleted |
 | Car plate and colour on an order | 30 days after the order is completed or cancelled | cleared (order kept) |
 | Audit log | 2 years | deleted |
+| Prize draws (entry list of order numbers or Instagram usernames, seed, winners) | 2 years | deleted |
 | Daily order-number counters | 7 days | deleted |
 | Orders, items, payments | not purged automatically (accounting) | — |
 | Customer accounts | until the customer asks for deletion | see below |

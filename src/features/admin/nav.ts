@@ -4,6 +4,7 @@ import {
   BarChart3,
   ClipboardList,
   FolderTree,
+  Gift,
   LayoutDashboard,
   ScrollText,
   Settings,
@@ -29,6 +30,7 @@ export const ADMIN_NAV: { to: string; key: string; icon: LucideIcon; min: AppRol
   { to: "/admin/settings", key: "settings", icon: Settings, min: "manager" },
   { to: "/admin/customers", key: "customers", icon: Users, min: "manager" },
   { to: "/admin/reports", key: "reports", icon: BarChart3, min: "manager" },
+  { to: "/admin/giveaways", key: "giveaways", icon: Gift, min: "manager" },
   { to: "/admin/staff", key: "staff", icon: UserCog, min: "super_admin" },
   { to: "/admin/audit", key: "audit", icon: ScrollText, min: "manager" },
 ];
