@@ -30,6 +30,9 @@ function Hero() {
   const title = content.data?.["home.hero.title"];
   const subtitle = content.data?.["home.hero.subtitle"];
   const Arrow = lang === "ar" ? ArrowLeft : ArrowRight;
+  // Hold the saved title back until it loads so the built-in default doesn't flash first.
+  // The default still reserves the space, so the layout doesn't jump. Without a backend there is nothing to wait for.
+  const waiting = env && content.isPending ? "invisible" : "motion-safe:animate-fade-in";
 
   return (
     <section className="relative isolate overflow-hidden bg-char-950 text-cream-50">
@@ -48,10 +51,10 @@ function Hero() {
             <MapPin className="size-4" aria-hidden />
             {t("home.why.localTitle")}
           </p>
-          <h1 className="text-[clamp(2.75rem,13vw,4.5rem)] font-black leading-[1.05] sm:text-7xl">
+          <h1 className={`text-[clamp(2.75rem,13vw,4.5rem)] font-black leading-[1.05] sm:text-7xl ${waiting}`}>
             {title ? pick(title, "value") : t("home.why.flameTitle")}
           </h1>
-          <p className="mx-auto max-w-md text-base text-cream-100/80 sm:max-w-xl sm:text-lg lg:mx-0">
+          <p className={`mx-auto max-w-md text-base text-cream-100/80 sm:max-w-xl sm:text-lg lg:mx-0 ${waiting}`}>
             {subtitle ? pick(subtitle, "value") : t("home.why.pickupBody")}
           </p>
           <div className="mx-auto grid max-w-sm grid-cols-2 gap-3 [&>a]:whitespace-nowrap max-[359px]:gap-2 max-[359px]:[&>a]:px-3 max-[359px]:[&>a]:text-sm sm:flex sm:max-w-none sm:justify-center lg:justify-start">
