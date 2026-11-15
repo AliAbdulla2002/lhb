@@ -1,12 +1,13 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { AtSign, Check, Copy, Gift, PartyPopper, Receipt, X } from "lucide-react";
+import { AtSign, Bookmark, Check, Copy, Gift, PartyPopper, Receipt, X } from "lucide-react";
 import { useLang } from "~/i18n";
 import { errorMessage, must } from "~/lib/errors";
 import { getSupabase } from "~/lib/supabase";
 import { useAdminBranches } from "~/features/admin/hooks";
 import { parseComments, parseList, type ParseResult } from "~/features/admin/giveaway-parse";
+import { collectorBookmarklet } from "~/features/admin/ig-collector";
 import { AdminPage, Panel, Pill, SelectFilter, Toggle } from "~/features/admin/ui";
 import { Button } from "~/ui/Button";
 import { EmptyState, ErrorState, Skeleton } from "~/ui/Feedback";
@@ -184,6 +185,38 @@ function OrdersDraw({ onDrawn }: { onDrawn: (d: Draw) => void }) {
 
 // ---- Draw from Instagram -----------------------------------------------------------------
 
+/** Instagram blocks selecting usernames, so the manager pulls comments with a bookmark instead. */
+function CollectorHelp() {
+  const { t } = useLang();
+  const link = useRef<HTMLAnchorElement>(null);
+  // React refuses javascript: hrefs, so the bookmarklet is set on the element directly.
+  useEffect(() => {
+    link.current?.setAttribute("href", collectorBookmarklet());
+  }, []);
+  return (
+    <div className="mt-4 rounded-2xl border border-ember-500/30 bg-ember-500/5 p-4 text-sm">
+      <p className="font-bold">{t("admin.giveaways.collector.title")}</p>
+      <ol className="mt-2 list-decimal space-y-1 ps-5 text-char-700">
+        <li>
+          {t("admin.giveaways.collector.step1")}{" "}
+          <a
+            ref={link}
+            draggable
+            onClick={(e) => e.preventDefault()}
+            title={t("admin.giveaways.collector.dragMe")}
+            className="mx-1 inline-flex cursor-grab items-center gap-1 rounded-full bg-ember-600 px-3 py-1 font-bold text-white active:cursor-grabbing"
+          >
+            <Bookmark className="size-3.5" aria-hidden />
+            {t("admin.giveaways.collector.name")}
+          </a>
+        </li>
+        <li>{t("admin.giveaways.collector.step2")}</li>
+        <li>{t("admin.giveaways.collector.step3")}</li>
+      </ol>
+    </div>
+  );
+}
+
 function InstagramDraw({ onDrawn }: { onDrawn: (d: Draw, pool: string[]) => void }) {
   const { t } = useLang();
   const qc = useQueryClient();
@@ -234,6 +267,7 @@ function InstagramDraw({ onDrawn }: { onDrawn: (d: Draw, pool: string[]) => void
           <InputField label={t("admin.giveaways.alternates")} type="number" min={0} max={20} dir="ltr" value={alternates} onChange={(e) => setAlternates(e.target.value)} />
         </div>
       </div>
+      {comments && <CollectorHelp />}
       <div className="mt-4 grid gap-4 lg:grid-cols-[2fr_1fr]">
         <TextareaField
           label={comments ? t("admin.giveaways.pasteComments") : t("admin.giveaways.pasteList")}

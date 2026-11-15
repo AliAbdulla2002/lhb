@@ -548,7 +548,7 @@
         "orders": "Invoices"
       },
       "pasteComments": "Paste the comments here",
-      "pasteCommentsHint": "Open the post on instagram.com on a computer, load all comments, select and copy them, then paste. Or paste a spreadsheet with a username column and a comment column.",
+      "pasteCommentsHint": "Use the button above, or paste a spreadsheet with a username column and a comment column. Copying by hand from Instagram leaves out the usernames.",
       "pasteList": "Paste the account names",
       "pasteListHint": "One account per line (for example from a followers export). Instagram doesn't share follower lists with apps, so they have to be copied.",
       "minMentions": "Friends they must tag",
@@ -575,7 +575,15 @@
       "copied": "Copied",
       "close": "Close",
       "contact": "Phone",
-      "openOrder": "Open order"
+      "openOrder": "Open order",
+      "collector": {
+        "title": "Pull the comments in one click (set up once)",
+        "name": "Lahab comments",
+        "dragMe": "Drag me to your bookmarks bar",
+        "step1": "Drag this button to your browser's bookmarks bar (Ctrl+Shift+B shows it):",
+        "step2": "Open the giveaway post on instagram.com on a computer and click the bookmark. Give it a moment to load every comment.",
+        "step3": "Press “Copy” in the box that appears, come back here and paste below."
+      }
     }
   },
   "status": {

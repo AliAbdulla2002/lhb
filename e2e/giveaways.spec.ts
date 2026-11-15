@@ -46,6 +46,10 @@ test("Instagram draw: parse comments, apply the tag rule, draw and reveal the wi
   await page.goto("/admin/giveaways");
   await expect(page.getByRole("heading", { name: "السحوبات والجوائز" })).toBeVisible();
   await page.getByRole("tab", { name: "من انستقرام" }).click();
+  // The comment-collector bookmark carries runnable code (checked for syntax only, not run here).
+  const href = await page.getByRole("link", { name: "سحب تعليقات لهب" }).getAttribute("href");
+  expect(href).toMatch(/^javascript:/);
+  expect(() => new Function(decodeURIComponent(href!.slice("javascript:".length)))).not.toThrow();
   await page.getByLabel("اسم السحب").fill("سحب التعليقات");
   await page.getByLabel("الصق التعليقات هني").fill(COMMENTS);
   await page.getByLabel("لازم يمنشن كم صديق؟").fill("2");
@@ -65,7 +69,7 @@ test("Instagram draw: parse comments, apply the tag rule, draw and reveal the wi
   expect(sent!.p_rules.min_mentions).toBe(2);
 
   await reveal.getByRole("button", { name: "خلصنا 🎉" }).click();
-  await expect(page.getByText("سحب التعليقات")).toBeVisible();
+  await expect(page.getByText("سحب التعليقات", { exact: true })).toBeVisible();
 });
 
 test("staff cannot open the prize draws page", async ({ page }) => {
