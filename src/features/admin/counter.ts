@@ -45,6 +45,21 @@ export interface CounterPlaced {
   linked_customer: boolean;
 }
 
+/** The server accepts 1–20 of one item per line (app.price_cart). */
+export const MAX_QTY = 20;
+/** Same limit as the server for an item note. */
+export const MAX_NOTE = 200;
+
+/** Common requests staff tap instead of typing (i18n keys under admin.newOrder.quick). */
+export const QUICK_NOTES = ["noSalad", "noOnion", "noTomato", "noPickles", "noGarlic", "noSauce", "extraSauce", "spicy", "notSpicy", "cutHalf"] as const;
+
+/** Adds the phrase to the note, or takes it out if it is already there. */
+export function toggleNotePhrase(note: string, phrase: string): string {
+  const parts = note.split(/[،,]\s*/).map((p) => p.trim()).filter(Boolean);
+  const next = parts.includes(phrase) ? parts.filter((p) => p !== phrase) : [...parts, phrase];
+  return next.join("، ").slice(0, MAX_NOTE);
+}
+
 export const lineKey = (productId: string, optionValueIds: string[], notes?: string) =>
   `${productId}|${[...optionValueIds].sort().join(",")}|${(notes ?? "").trim()}`;
 
@@ -52,14 +67,29 @@ export const lineKey = (productId: string, optionValueIds: string[], notes?: str
 export function addLine(lines: CounterLine[], line: Omit<CounterLine, "key">): CounterLine[] {
   const key = lineKey(line.productId, line.optionValueIds, line.notes);
   const found = lines.find((l) => l.key === key);
-  if (found) return lines.map((l) => (l.key === key ? { ...l, quantity: Math.min(99, l.quantity + line.quantity) } : l));
+  if (found) return lines.map((l) => (l.key === key ? { ...l, quantity: Math.min(MAX_QTY, l.quantity + line.quantity) } : l));
   return [...lines, { ...line, key, optionValueIds: [...line.optionValueIds].sort() }];
 }
 
 /** Change a line's quantity; zero removes it. */
 export function setQuantity(lines: CounterLine[], key: string, quantity: number): CounterLine[] {
   if (quantity <= 0) return lines.filter((l) => l.key !== key);
-  return lines.map((l) => (l.key === key ? { ...l, quantity: Math.min(99, quantity) } : l));
+  return lines.map((l) => (l.key === key ? { ...l, quantity: Math.min(MAX_QTY, quantity) } : l));
+}
+
+/** Change a line's note; if another line now matches it exactly, the two merge. */
+export function setNotes(lines: CounterLine[], key: string, notes: string): CounterLine[] {
+  const line = lines.find((l) => l.key === key);
+  if (!line) return lines;
+  const clean = notes.trim().slice(0, MAX_NOTE) || undefined;
+  const rest = lines.filter((l) => l.key !== key);
+  const merged = addLine(rest, { ...line, notes: clean });
+  // Keep the edited line where it was in the ticket.
+  const newKey = lineKey(line.productId, line.optionValueIds, clean);
+  const at = lines.findIndex((l) => l.key === key);
+  const moved = merged.find((l) => l.key === newKey)!;
+  const others = merged.filter((l) => l.key !== newKey);
+  return [...others.slice(0, at), moved, ...others.slice(at)];
 }
 
 export const itemsFromLines = (lines: CounterLine[]): QuoteItem[] =>

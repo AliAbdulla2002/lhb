@@ -1,7 +1,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Link } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Banknote, CarFront, Check, CreditCard, Minus, Plus, Search, ShoppingBag, Store, Trash2, UserRound } from "lucide-react";
+import { Banknote, CarFront, Check, CreditCard, MessageSquarePlus, Minus, Plus, Search, ShoppingBag, Store, Trash2, UserRound } from "lucide-react";
 import { useLang } from "~/i18n";
 import { quoteCart } from "~/lib/api/menu";
 import { useCategories } from "~/lib/api/queries";
@@ -13,8 +13,13 @@ import {
   fetchCounterMenu,
   itemsFromLines,
   phoneOk,
+  MAX_NOTE,
+  MAX_QTY,
   placeCounterOrder,
+  QUICK_NOTES,
+  setNotes as setLineNotes,
   setQuantity,
+  toggleNotePhrase,
   type CounterLine,
   type CounterPayment,
   type CounterPlaced,
@@ -25,7 +30,7 @@ import { ProductImage } from "~/features/menu/ProductCard";
 import { normalizePlate, orderErrorMessage, PLATE_RE, SWATCH, VEHICLE_COLORS, type VehicleColor } from "~/features/checkout/api";
 import { Button } from "~/ui/Button";
 import { ErrorState, Skeleton } from "~/ui/Feedback";
-import { InputField } from "~/ui/Field";
+import { InputField, TextareaField } from "~/ui/Field";
 import { Price } from "~/ui/Price";
 import { cn } from "~/ui/cn";
 
@@ -52,6 +57,61 @@ function Segmented<T extends string>({ value, onChange, options, label }: { valu
         </button>
       ))}
     </div>
+  );
+}
+
+/** Quick requests ("no salad", "spicy"…) as big chips, plus free text for anything else. */
+function NoteEditor({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const { t } = useLang();
+  const parts = value.split(/[،,]\s*/).map((p) => p.trim());
+  return (
+    <div className="space-y-3">
+      <p className="font-bold">{t("admin.newOrder.itemNote")}</p>
+      <div className="flex flex-wrap gap-2">
+        {QUICK_NOTES.map((k) => {
+          const phrase = t(`admin.newOrder.quick.${k}`);
+          const on = parts.includes(phrase);
+          return (
+            <button
+              key={k}
+              type="button"
+              aria-pressed={on}
+              onClick={() => onChange(toggleNotePhrase(value, phrase))}
+              className={cn(
+                "h-11 rounded-full border-2 px-4 font-bold transition",
+                on ? "border-ember-500 bg-ember-500 text-white" : "border-char-900/10 bg-white hover:border-char-900/25",
+              )}
+            >
+              {phrase}
+            </button>
+          );
+        })}
+      </div>
+      <TextareaField
+        label={t("admin.newOrder.otherNote")}
+        placeholder={t("admin.newOrder.itemNotePlaceholder")}
+        rows={2}
+        maxLength={MAX_NOTE}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function LineNote({ line, onClose, onSave }: { line: CounterLine; onClose: () => void; onSave: (notes: string) => void }) {
+  const { t, lang } = useLang();
+  const [notes, setNotesText] = useState(line.notes ?? "");
+  return (
+    <Modal open onClose={onClose} title={lang === "ar" ? line.nameAr : line.nameEn}>
+      <div className="space-y-4">
+        <NoteEditor value={notes} onChange={setNotesText} />
+        <Button size="lg" className="w-full" onClick={() => onSave(notes)}>
+          <Check className="size-5" aria-hidden />
+          {t("admin.newOrder.saveNote")}
+        </Button>
+      </div>
+    </Modal>
   );
 }
 
@@ -100,14 +160,14 @@ function ProductSheet({ product, onClose, onAdd }: { product: ProductDetail; onC
             </div>
           </fieldset>
         ))}
-        <InputField label={t("admin.newOrder.itemNote")} placeholder={t("admin.newOrder.itemNotePlaceholder")} value={notes} maxLength={200} onChange={(e) => setNotes(e.target.value)} />
+        <NoteEditor value={notes} onChange={setNotes} />
         <div className="flex flex-wrap items-center justify-between gap-3 border-t border-char-900/10 pt-4">
           <div className="flex items-center gap-2">
             <button type="button" aria-label={t("admin.newOrder.less")} onClick={() => setQty(Math.max(1, qty - 1))} className="grid size-12 place-items-center rounded-full border-2 border-char-900/15">
               <Minus className="size-5" aria-hidden />
             </button>
             <span className="w-10 text-center text-2xl font-black" aria-live="polite">{qty}</span>
-            <button type="button" aria-label={t("admin.newOrder.more")} onClick={() => setQty(Math.min(99, qty + 1))} className="grid size-12 place-items-center rounded-full border-2 border-char-900/15">
+            <button type="button" aria-label={t("admin.newOrder.more")} onClick={() => setQty(Math.min(MAX_QTY, qty + 1))} className="grid size-12 place-items-center rounded-full border-2 border-char-900/15">
               <Plus className="size-5" aria-hidden />
             </button>
           </div>
@@ -188,6 +248,8 @@ export default function NewOrder() {
   const [paidNow, setPaidNow] = useState(true);
   const [placed, setPlaced] = useState<{ order: CounterPlaced; plate: string | null } | null>(null);
   const [ticketOpen, setTicketOpen] = useState(false);
+  const [noteFor, setNoteFor] = useState<string | null>(null);
+  const noteLine = lines.find((l) => l.key === noteFor) ?? null;
   // One key per ticket so a double tap or a retry after a dropped connection never makes two orders.
   const key = useRef(crypto.randomUUID());
 
@@ -265,9 +327,18 @@ export default function NewOrder() {
               <li key={l.key} className={cn("flex items-center gap-2 p-3", issues.some((x) => x.index === i) && "bg-ember-50")}>
                 <div className="min-w-0 flex-1">
                   <p className="font-bold">{lang === "ar" ? l.nameAr : l.nameEn}</p>
-                  {(l.choices.length > 0 || l.notes) && (
-                    <p className="truncate text-sm text-char-700">{[...l.choices.map((c) => (lang === "ar" ? c.ar : c.en)), l.notes].filter(Boolean).join(" · ")}</p>
-                  )}
+                  {l.choices.length > 0 && <p className="truncate text-sm text-char-700">{l.choices.map((c) => (lang === "ar" ? c.ar : c.en)).join(" · ")}</p>}
+                  <button
+                    type="button"
+                    onClick={() => setNoteFor(l.key)}
+                    className={cn(
+                      "mt-1 inline-flex min-h-9 items-center gap-1 rounded-full px-3 text-sm font-semibold",
+                      l.notes ? "bg-amber-100 text-amber-900" : "bg-char-900/5 text-char-700",
+                    )}
+                  >
+                    <MessageSquarePlus className="size-4 shrink-0" aria-hidden />
+                    <span className="line-clamp-2 text-start">{l.notes || t("admin.newOrder.addNote")}</span>
+                  </button>
                   <p className="text-sm"><Price value={quote.data?.lines.find((q) => q.index === i)?.line_total ?? l.unitPrice * l.quantity} /></p>
                 </div>
                 <div className="flex items-center gap-1">
@@ -275,7 +346,7 @@ export default function NewOrder() {
                     {l.quantity === 1 ? <Trash2 className="size-4 text-ember-700" aria-hidden /> : <Minus className="size-4" aria-hidden />}
                   </button>
                   <span className="w-7 text-center text-lg font-black">{l.quantity}</span>
-                  <button type="button" aria-label={t("admin.newOrder.more")} onClick={() => setLines(setQuantity(lines, l.key, l.quantity + 1))} className="grid size-11 place-items-center rounded-full border-2 border-char-900/10">
+                  <button type="button" aria-label={t("admin.newOrder.more")} disabled={l.quantity >= MAX_QTY} onClick={() => setLines(setQuantity(lines, l.key, l.quantity + 1))} className="grid size-11 place-items-center rounded-full border-2 border-char-900/10">
                     <Plus className="size-4" aria-hidden />
                   </button>
                 </div>
@@ -475,6 +546,16 @@ export default function NewOrder() {
           onAdd={(line) => {
             setLines((ls) => addLine(ls, line));
             setOpen(null);
+          }}
+        />
+      )}
+      {noteLine && (
+        <LineNote
+          line={noteLine}
+          onClose={() => setNoteFor(null)}
+          onSave={(n) => {
+            setLines((ls) => setLineNotes(ls, noteLine.key, n));
+            setNoteFor(null);
           }}
         />
       )}

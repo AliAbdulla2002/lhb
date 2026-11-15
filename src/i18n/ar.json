@@ -600,8 +600,8 @@
       "soldOut": "خلصان",
       "required": "إجباري",
       "upTo": "لين {{count}}",
-      "itemNote": "ملاحظة على الصنف",
-      "itemNotePlaceholder": "مثلاً: بدون بصل",
+      "itemNote": "طلبات خاصة",
+      "itemNotePlaceholder": "اكتب أي طلب ثاني",
       "less": "أقل",
       "more": "زيادة",
       "remove": "شيل",
@@ -631,7 +631,22 @@
       "doneCar": "السيارة: {{plate}} — بيطلع في شاشة الاستلام",
       "linked": "انربط بحساب العميل ✓",
       "next": "طلب جديد",
-      "toBoard": "روح لشاشة الاستلام"
+      "toBoard": "روح لشاشة الاستلام",
+      "quick": {
+        "noSalad": "بدون سلطة",
+        "noOnion": "بدون بصل",
+        "noTomato": "بدون طماط",
+        "noPickles": "بدون مخلل",
+        "noGarlic": "بدون ثوم",
+        "noSauce": "بدون صوص",
+        "extraSauce": "زيادة صوص",
+        "spicy": "حار",
+        "notSpicy": "بدون حار",
+        "cutHalf": "قص نصين"
+      },
+      "otherNote": "شي ثاني؟",
+      "addNote": "ملاحظة",
+      "saveNote": "حفظ الملاحظة"
     }
   },
   "status": {

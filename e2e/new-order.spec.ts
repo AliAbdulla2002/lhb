@@ -51,6 +51,13 @@ test("staff take an order at the car on a tablet: items, plate, pay on handover"
 
   const ticket = page.getByRole("complementary");
   await expect(ticket.getByText("(3)")).toBeVisible();
+  // A plain item gets its special requests from the note button on its line.
+  await ticket.getByRole("button", { name: "ملاحظة" }).last().click();
+  const note = page.getByRole("dialog", { name: "شاورما عربي — نموذج" });
+  await note.getByRole("button", { name: "بدون سلطة" }).click();
+  await note.getByRole("button", { name: "حار", exact: true }).click();
+  await note.getByRole("button", { name: "حفظ الملاحظة" }).click();
+  await expect(ticket.getByRole("button", { name: "بدون سلطة، حار" })).toBeVisible();
   // At the car, a plate is needed before the order can go.
   await expect(ticket.getByRole("button", { name: /أكد الطلب/ })).toBeDisabled();
   await ticket.getByLabel("رقم لوحة السيارة").fill("123 456");
@@ -74,7 +81,7 @@ test("staff take an order at the car on a tablet: items, plate, pay on handover"
     vehicle: { plate: "123 456", color: "black" },
     items: [
       { product_id: "p1", quantity: 1, option_value_ids: ["v2"] },
-      { product_id: "p2", quantity: 2, option_value_ids: [] },
+      { product_id: "p2", quantity: 2, option_value_ids: [], notes: "بدون سلطة، حار" },
     ],
   });
   expect(typeof sent!.idempotency_key).toBe("string");

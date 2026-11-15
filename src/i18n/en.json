@@ -596,8 +596,8 @@
       "soldOut": "Sold out",
       "required": "Required",
       "upTo": "up to {{count}}",
-      "itemNote": "Item note",
-      "itemNotePlaceholder": "e.g. no onion",
+      "itemNote": "Special requests",
+      "itemNotePlaceholder": "Type any other request",
       "less": "Less",
       "more": "More",
       "remove": "Remove",
@@ -627,7 +627,22 @@
       "doneCar": "Car: {{plate}} — it is on the pickup board",
       "linked": "Linked to the customer's account ✓",
       "next": "New order",
-      "toBoard": "Go to the pickup board"
+      "toBoard": "Go to the pickup board",
+      "quick": {
+        "noSalad": "No salad",
+        "noOnion": "No onion",
+        "noTomato": "No tomato",
+        "noPickles": "No pickles",
+        "noGarlic": "No garlic",
+        "noSauce": "No sauce",
+        "extraSauce": "Extra sauce",
+        "spicy": "Spicy",
+        "notSpicy": "Not spicy",
+        "cutHalf": "Cut in half"
+      },
+      "otherNote": "Anything else?",
+      "addNote": "Note",
+      "saveNote": "Save note"
     }
   },
   "status": {
