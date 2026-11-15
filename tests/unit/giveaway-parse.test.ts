@@ -52,6 +52,42 @@ describe("parseComments", () => {
   });
 });
 
+// Text from instagram.com (2026 web layout): time, likes and "Reply" glued onto one line.
+const copiedFrom2026Web = `lahab.bh
+•
+Follow
+Original audio
+475 likes
+lahab.bh
+.
+New dish 🔥
+Edited · 5w
+See translation
+fire.fan
+🔥🔥🔥
+5w1 likeReply
+user_two
+@friend_a @friend_b
+4wReply
+See translation
+View replies (1)
+shop.bh7
+How much?
+5wReply
+October 7
+Post`;
+
+describe("parseComments with the 2026 web layout", () => {
+  test("ignores the glued time/likes/reply lines and page chrome", () => {
+    const { entries } = parseComments(copiedFrom2026Web, { exclude: ["lahab.bh"] });
+    expect(entries.map((e) => [e.username, e.mentions])).toEqual([
+      ["fire.fan", 0],
+      ["shop.bh7", 0],
+      ["user_two", 2],
+    ]);
+  });
+});
+
 describe("parseList", () => {
   test("one account per line, de-duplicated, interface lines ignored", () => {
     const { entries, excluded } = parseList("@Ali.bh\nsara_99 Sara\nali.bh\nFollow\n\nhuda.k", { exclude: ["huda.k"] });

@@ -8,10 +8,23 @@
  * "2d", "Reply" or "3 likes". Followers lists are one username per line.
  */
 
-const USERNAME = /^@?([a-z0-9._]{1,30})$/i;
+// At least one letter or digit, so lines like "." or "•" are not read as accounts.
+const USERNAME = /^@?((?=[a-z0-9._]*[a-z0-9])[a-z0-9._]{1,30})$/i;
 const MENTION = /@([a-z0-9._]{1,30})/gi;
 // Interface lines Instagram puts between comments (English and Arabic web UI).
-const NOISE = /^(reply|replies|view( all)? \d* ?repl(y|ies)|hide replies|see translation|translation|verified|edited|like|liked|\d+ likes?|\d+[smhdwy]|\d+ (seconds?|minutes?|hours?|days?|weeks?)( ago)?|follow|following|remove|رد|الرد|ردود|عرض الردود|إخفاء الردود|مشاهدة الترجمة|إعجاب|تم التحقق|\d+ إعجاب(ات)?|متابعة|يتابع)$/i;
+const NOISE = new RegExp(
+  `^(${[
+    /reply|replies|view( all)? \d* ?repl(y|ies)( \(\d+\))?|hide( all)? replies|see translation|translation|verified|edited|like|liked|post|follow|following|remove|original audio|load more comments/,
+    // Time and likes, which the web page glues together: "5w", "5wReply", "4w1 likeReply", "Edited · 5w".
+    /(edited\s*·\s*)?\d+[smhdwy](\s*\d+ likes?)?\s*(reply)?/,
+    /\d+ likes?|\d+ (seconds?|minutes?|hours?|days?|weeks?)( ago)?/,
+    /(january|february|march|april|may|june|july|august|september|october|november|december) \d{1,2}(, \d{4})?/,
+    /رد|الرد|ردود|عرض الردود.*|إخفاء الردود|مشاهدة الترجمة|إعجاب|تم التحقق|\d+ إعجاب(ات)?|متابعة|يتابع|نشر|صوت أصلي/,
+  ]
+    .map((r) => r.source)
+    .join("|")})$`,
+  "i",
+);
 
 export interface ParsedEntry {
   username: string;
