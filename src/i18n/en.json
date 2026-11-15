@@ -527,7 +527,7 @@
       "fromOrders": "From invoices",
       "fromInstagram": "From Instagram",
       "name": "Draw name",
-      "namePlaceholder": "e.g. End-of-month draw",
+      "namePlaceholder": "Optional, e.g. End-of-month draw",
       "from": "From",
       "to": "To",
       "minTotal": "Minimum invoice (BHD)",

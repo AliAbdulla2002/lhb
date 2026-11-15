@@ -142,7 +142,7 @@ function OrdersDraw({ onDrawn }: { onDrawn: (d: Draw) => void }) {
   const draw = useMutation({
     mutationFn: async () =>
       must(
-        await getSupabase()!.rpc("admin_draw_orders", { ...params, p_title: title.trim(), p_winners: clampInt(winners, 1, 50), p_alternates: clampInt(alternates, 0, 20) }),
+        await getSupabase()!.rpc("admin_draw_orders", { ...params, p_title: title.trim() || defaultTitle(t("admin.giveaways.sources.orders")), p_winners: clampInt(winners, 1, 50), p_alternates: clampInt(alternates, 0, 20) }),
       ) as Draw,
     onSuccess: (d) => {
       void qc.invalidateQueries({ queryKey: ["admin", "giveaways"] });
@@ -174,7 +174,7 @@ function OrdersDraw({ onDrawn }: { onDrawn: (d: Draw) => void }) {
       <DrawBar
         count={count.data}
         countNote={t("admin.giveaways.eligibleNote")}
-        disabled={!title.trim() || !count.data || count.data < clampInt(winners, 1, 50)}
+        disabled={!count.data || count.data < clampInt(winners, 1, 50)}
         pending={draw.isPending}
         error={draw.isError ? errorMessage(draw.error, t) : count.isError ? errorMessage(count.error, t) : null}
         onDraw={() => draw.mutate()}
@@ -238,7 +238,7 @@ function InstagramDraw({ onDrawn }: { onDrawn: (d: Draw, pool: string[]) => void
     mutationFn: async () =>
       must(
         await getSupabase()!.rpc("admin_draw_list", {
-          p_title: title.trim(),
+          p_title: title.trim() || defaultTitle(t(`admin.giveaways.sources.${source}`)),
           p_source: source,
           p_entries: pool,
           p_winners: clampInt(winners, 1, 50),
@@ -310,13 +310,19 @@ function InstagramDraw({ onDrawn }: { onDrawn: (d: Draw, pool: string[]) => void
 
       <DrawBar
         count={parsed.entries.length}
-        disabled={!title.trim() || parsed.entries.length < clampInt(winners, 1, 50)}
+        disabled={parsed.entries.length < clampInt(winners, 1, 50)}
         pending={draw.isPending}
         error={draw.isError ? errorMessage(draw.error, t) : null}
         onDraw={() => draw.mutate()}
       />
     </Panel>
   );
+}
+
+/** Name used when the manager leaves the draw name empty, e.g. "Instagram comments · 15/11". */
+function defaultTitle(source: string) {
+  const d = new Date();
+  return `${source} · ${d.getDate()}/${d.getMonth() + 1}`;
 }
 
 function DrawBar({ count, countNote, disabled, pending, error, onDraw }: { count: number | undefined; countNote?: string; disabled: boolean; pending: boolean; error: string | null; onDraw: () => void }) {
