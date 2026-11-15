@@ -185,7 +185,7 @@ function OrdersDraw({ onDrawn }: { onDrawn: (d: Draw) => void }) {
 
 // ---- Draw from Instagram -----------------------------------------------------------------
 
-/** Instagram blocks selecting usernames, so the manager pulls comments with a bookmark instead. */
+/** Instagram blocks selecting usernames, so the manager pulls comments or followers with a bookmark instead. */
 function CollectorHelp() {
   const { t } = useLang();
   const link = useRef<HTMLAnchorElement>(null);
@@ -267,7 +267,7 @@ function InstagramDraw({ onDrawn }: { onDrawn: (d: Draw, pool: string[]) => void
           <InputField label={t("admin.giveaways.alternates")} type="number" min={0} max={20} dir="ltr" value={alternates} onChange={(e) => setAlternates(e.target.value)} />
         </div>
       </div>
-      {comments && <CollectorHelp />}
+      {source !== "list" && <CollectorHelp />}
       <div className="mt-4 grid gap-4 lg:grid-cols-[2fr_1fr]">
         <TextareaField
           label={comments ? t("admin.giveaways.pasteComments") : t("admin.giveaways.pasteList")}

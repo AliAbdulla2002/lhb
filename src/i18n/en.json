@@ -550,7 +550,7 @@
       "pasteComments": "Paste the comments here",
       "pasteCommentsHint": "Use the button above, or paste a spreadsheet with a username column and a comment column. Copying by hand from Instagram leaves out the usernames.",
       "pasteList": "Paste the account names",
-      "pasteListHint": "One account per line (for example from a followers export). Instagram doesn't share follower lists with apps, so they have to be copied.",
+      "pasteListHint": "One account per line. Use the button above with the followers list open, or paste an export.",
       "minMentions": "Friends they must tag",
       "exclude": "Exclude these accounts",
       "excludeHint": "The restaurant's and staff accounts, separated by commas.",
@@ -577,12 +577,12 @@
       "contact": "Phone",
       "openOrder": "Open order",
       "collector": {
-        "title": "Pull the comments in one click (set up once)",
-        "name": "Lahab comments",
+        "title": "Pull comments or followers in one click (set up once)",
+        "name": "Pull from Instagram",
         "dragMe": "Drag me to your bookmarks bar",
         "step1": "Drag this button to your browser's bookmarks bar (Ctrl+Shift+B shows it):",
-        "step2": "Open the giveaway post on instagram.com on a computer and click the bookmark. Give it a moment to load every comment.",
-        "step3": "Press “Copy” in the box that appears, come back here and paste below."
+        "step2": "For comments: open the giveaway post on instagram.com on a computer. For followers: open the account page and click the followers count. Then click the bookmark.",
+        "step3": "It loads everything (a big followers list takes minutes; you can stop any time). Press “Copy”, come back here and paste."
       }
     }
   },

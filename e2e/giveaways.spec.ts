@@ -47,7 +47,7 @@ test("Instagram draw: parse comments, apply the tag rule, draw and reveal the wi
   await expect(page.getByRole("heading", { name: "السحوبات والجوائز" })).toBeVisible();
   await page.getByRole("tab", { name: "من انستقرام" }).click();
   // The comment-collector bookmark carries runnable code (checked for syntax only, not run here).
-  const href = await page.getByRole("link", { name: "سحب تعليقات لهب" }).getAttribute("href");
+  const href = await page.getByRole("link", { name: "سحب من انستقرام" }).getAttribute("href");
   expect(href).toMatch(/^javascript:/);
   expect(() => new Function(decodeURIComponent(href!.slice("javascript:".length)))).not.toThrow();
   await page.getByLabel("اسم السحب").fill("سحب التعليقات");
