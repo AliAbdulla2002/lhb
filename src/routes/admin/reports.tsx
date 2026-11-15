@@ -11,6 +11,8 @@ import { Price } from "~/ui/Price";
 
 interface Report {
   totals: { orders: number; completed: number; cancelled: number; revenue: number; discounts: number };
+  /** Present once the counter-orders migration is applied. */
+  by_source?: Record<"online" | "counter", { orders: number; revenue: number }>;
   daily: { day: string; orders: number; revenue: number }[];
   top_products: { product_id: string | null; name_ar: string; name_en: string; quantity: number; revenue: number }[];
 }
@@ -64,6 +66,21 @@ export default function AdminReports() {
           <p className="text-sm text-char-700">
             {t("admin.reports.discounts")}: <Price value={report.data.totals.discounts} />
           </p>
+          {report.data.by_source && (
+            <Panel title={t("admin.reports.bySource")}>
+              <dl className="grid gap-3 sm:grid-cols-2">
+                {(["online", "counter"] as const).map((s) => (
+                  <div key={s} className="rounded-xl bg-cream-100 p-4">
+                    <dt className="text-sm text-char-700">{t(`status.source.${s}`)}</dt>
+                    <dd className="mt-1 text-2xl font-black">
+                      <Price value={report.data!.by_source![s].revenue} />
+                    </dd>
+                    <dd className="text-sm text-char-700">{t("admin.reports.sourceOrders", { count: report.data!.by_source![s].orders })}</dd>
+                  </div>
+                ))}
+              </dl>
+            </Panel>
+          )}
 
           <div className="grid gap-4 lg:grid-cols-2">
             <Panel title={t("admin.reports.daily")}>

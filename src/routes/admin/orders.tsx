@@ -53,6 +53,7 @@ function OrderDetail({ order, onClose }: { order: AdminOrder; onClose: () => voi
         <StatusBadge kind="order" value={order.status} />
         <StatusBadge kind="payment" value={order.payment_status} />
         <Pill>{t(`status.method.${order.payment_method}`)}</Pill>
+        {order.source === "counter" && <Pill tone="warn">{t("status.source.counter")}</Pill>}
         {pickup && pickup.arrival_status !== "not_arrived" && <StatusBadge kind="arrival" value={pickup.arrival_status} />}
       </div>
 
@@ -270,8 +271,11 @@ export default function AdminOrders() {
               {
                 header: t("admin.orders.number"),
                 cell: (o) => (
-                  <span className="font-bold" dir="ltr">
-                    {o.order_number}
+                  <span className="inline-flex items-center gap-2">
+                    <span className="font-bold" dir="ltr">
+                      {o.order_number}
+                    </span>
+                    {o.source === "counter" && <Pill tone="warn">{t("status.source.counter")}</Pill>}
                   </span>
                 ),
               },

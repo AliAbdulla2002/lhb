@@ -33,6 +33,7 @@ interface QueueRow {
   acknowledged_at: string | null;
   branch_name_ar: string;
   branch_name_en: string;
+  source?: "online" | "counter";
 }
 
 const QUEUE_KEY = ["admin", "pickup-queue"];
@@ -87,6 +88,7 @@ function QueueCard({ row, now, busy, onAcknowledge, onAdvance }: { row: QueueRow
           <p className="whitespace-nowrap text-xs text-char-700" dir="ltr">
             {row.order_number}
           </p>
+          {row.source === "counter" && <p className="text-xs font-bold text-amber-700">{t("status.source.counter")}</p>}
         </div>
       </div>
 

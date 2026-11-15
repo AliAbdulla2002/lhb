@@ -228,7 +228,8 @@
       "reports": "Reports",
       "audit": "Audit log",
       "pickup": "Pickup queue",
-      "giveaways": "Prize draws"
+      "giveaways": "Prize draws",
+      "newOrder": "New order"
     },
     "common": {
       "search": "Search",
@@ -509,7 +510,9 @@
       "top": "Top products",
       "quantity": "Qty",
       "revenueNote": "Revenue counts completed orders only.",
-      "day": "Day"
+      "day": "Day",
+      "bySource": "Where orders came from",
+      "sourceOrders": "{{count}} orders"
     },
     "audit": {
       "title": "Audit log",
@@ -584,6 +587,47 @@
         "step2": "For comments: open the giveaway post on instagram.com on a computer. For followers: open the account page and click the followers count. Then click the bookmark.",
         "step3": "It loads everything (a big followers list takes minutes; you can stop any time). Press “Copy”, come back here and paste."
       }
+    },
+    "newOrder": {
+      "title": "New order",
+      "menu": "Menu",
+      "search": "Search the menu…",
+      "all": "All",
+      "soldOut": "Sold out",
+      "required": "Required",
+      "upTo": "up to {{count}}",
+      "itemNote": "Item note",
+      "itemNotePlaceholder": "e.g. no onion",
+      "less": "Less",
+      "more": "More",
+      "remove": "Remove",
+      "add": "Add",
+      "ticket": "Order",
+      "empty": "Tap items to add them",
+      "unavailable": "An item is no longer available; remove it.",
+      "where": "Where is the customer?",
+      "atCar": "At the car",
+      "inside": "Inside",
+      "customer": "Customer details",
+      "phone": "Phone",
+      "phoneHint": "Links the order to their account if the number matches",
+      "phoneBad": "Check the number",
+      "name": "Name",
+      "orderNote": "Order note",
+      "payment": "Payment",
+      "cash": "Cash",
+      "card": "Card",
+      "whenPaid": "When do they pay?",
+      "paidNow": "Paid now",
+      "paidLater": "Pays on handover",
+      "needPlate": "Enter the plate, or choose “Inside”.",
+      "place": "Place order",
+      "openTicket": "Order ({{count}})",
+      "doneTitle": "Order placed",
+      "doneCar": "Car: {{plate}} — it is on the pickup board",
+      "linked": "Linked to the customer's account ✓",
+      "next": "New order",
+      "toBoard": "Go to the pickup board"
     }
   },
   "status": {
@@ -610,7 +654,12 @@
     },
     "method": {
       "cash_on_pickup": "Cash on pickup",
-      "online": "Online"
+      "online": "Online",
+      "card": "Card"
+    },
+    "source": {
+      "online": "Online",
+      "counter": "Counter"
     }
   },
   "errors": {
@@ -757,7 +806,8 @@
     "idempotency_key_reused": "Your order details changed. Please place the order again.",
     "auth_required": "Please log in to place an order.",
     "rate_limited": "Too many orders in a short time. Please wait a few minutes.",
-    "invalid_request": "Something in the order isn't valid. Please review and try again."
+    "invalid_request": "Something in the order isn't valid. Please review and try again.",
+    "phone_invalid": "That phone number isn't valid."
   },
   "pickup": {
     "title": "Pickup",

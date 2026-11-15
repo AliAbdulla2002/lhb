@@ -22,6 +22,7 @@ export interface AdminOrder {
   notes: string | null;
   cancel_reason: string | null;
   created_at: string;
+  source: "online" | "counter";
   branches: { name_ar: string; name_en: string } | null;
   pickup_details: {
     vehicle_plate: string | null;
@@ -43,7 +44,7 @@ export interface AdminOrder {
 }
 
 const SELECT = `id, order_number, status, branch_id, fulfillment_type, payment_method, payment_status, requested_pickup_at,
-  subtotal, options_total, discount_total, total, coupon_code, customer_name, customer_phone, notes, cancel_reason, created_at,
+  subtotal, options_total, discount_total, total, coupon_code, customer_name, customer_phone, notes, cancel_reason, created_at, source,
   branches(name_ar, name_en),
   pickup_details(vehicle_plate, vehicle_color, arrival_status, arrived_at, notify_count),
   order_items(id, product_name_ar, product_name_en, quantity, line_total, notes,

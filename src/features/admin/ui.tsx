@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { ArrowDown, ArrowUp, Search, X } from "lucide-react";
 import { useLang } from "~/i18n";
 import { Button } from "~/ui/Button";
@@ -177,6 +177,7 @@ export function Modal({
   wide?: boolean;
 }) {
   const ref = useRef<HTMLDialogElement>(null);
+  const titleId = useId();
   const { t } = useLang();
   useEffect(() => {
     const d = ref.current;
@@ -187,6 +188,7 @@ export function Modal({
   return (
     <dialog
       ref={ref}
+      aria-labelledby={titleId}
       onClose={onClose}
       onClick={(e) => e.target === ref.current && onClose()}
       className={cn(
@@ -197,7 +199,9 @@ export function Modal({
       {open && (
         <div className="p-5 sm:p-6">
           <div className="mb-4 flex items-center justify-between gap-3">
-            <h2 className="text-xl font-black">{title}</h2>
+            <h2 id={titleId} className="text-xl font-black">
+              {title}
+            </h2>
             <button type="button" onClick={onClose} className="grid size-9 place-items-center rounded-full hover:bg-char-900/5" aria-label={t("admin.common.close")}>
               <X className="size-5" aria-hidden />
             </button>

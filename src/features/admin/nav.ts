@@ -6,6 +6,7 @@ import {
   FolderTree,
   Gift,
   LayoutDashboard,
+  SquarePlus,
   ScrollText,
   Settings,
   Store,
@@ -20,6 +21,7 @@ import type { AppRole } from "~/features/auth/AuthProvider";
 /** Minimum role per admin page. Mirrors the server-side checks; it does not replace them. */
 export const ADMIN_NAV: { to: string; key: string; icon: LucideIcon; min: AppRole; end?: boolean }[] = [
   { to: "/admin", key: "overview", icon: LayoutDashboard, min: "staff", end: true },
+  { to: "/admin/new-order", key: "newOrder", icon: SquarePlus, min: "staff" },
   { to: "/admin/orders", key: "orders", icon: ClipboardList, min: "staff" },
   { to: "/admin/pickup", key: "pickup", icon: CarFront, min: "staff" },
   { to: "/admin/products", key: "products", icon: UtensilsCrossed, min: "manager" },

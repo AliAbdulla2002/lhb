@@ -26,6 +26,7 @@ export default [
   ]),
   route("admin", "routes/admin/_layout.tsx", [
     index("routes/admin/index.tsx"),
+    route("new-order", "routes/admin/new-order.tsx"),
     route("orders", "routes/admin/orders.tsx"),
     route("pickup", "routes/admin/pickup.tsx"),
     route("products", "routes/admin/products.tsx"),
